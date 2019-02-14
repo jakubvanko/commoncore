@@ -1,7 +1,9 @@
 package sk.jakubvanko.ultrachest.actions;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import sk.jakubvanko.commoncore.CCMaterial;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.commoncore.actions.GiveItem;
 import sk.jakubvanko.commoncore.actions.RemoveItem;
@@ -24,7 +26,13 @@ public class GenerateReward extends ClickAction<UCEventArguments> {
         // Generating a reward
         ItemStack generatedReward = eventArguments.getRewardGenerator().generateReward(rewardTier);
         int clickedSlot = event.getSlot();
-        event.getClickedInventory().setItem(clickedSlot, generatedReward);
+        Inventory clickedInventory;
+        if (CCMaterial.isNewVersion()) {
+            clickedInventory = event.getClickedInventory();
+        } else {
+            clickedInventory = event.getView().getTopInventory();
+        }
+        clickedInventory.setItem(clickedSlot, generatedReward);
         // Removing this action and replacing it with others
         Map<Integer, List<ClickAction>> slotActionMap = eventArguments.getPlayerData().getPlayerInventoryData().getSlotActionMap();
         slotActionMap.remove(clickedSlot);

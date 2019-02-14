@@ -63,7 +63,7 @@ general:
         max_amount: 2
 
 messages:
-  logo: '§3[§aUltra§6Chest§3]§f'
+  logo: '§3[§aUltra§6Chest§3]§3'
   chest_not_found: "%logo §cSorry, chest named %chestname was not found!"
   not_player: "%logo §cSorry, you have to be a player to do that!"
   no_permission: "%logo §cSorry, you don't have permission to do that."
