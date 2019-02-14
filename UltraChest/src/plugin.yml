@@ -1,0 +1,22 @@
+name: UltraChest
+version: 2.0
+api-version: 1.13
+author: GitHub/jakubvanko
+main: sk.jakubvanko.ultrachest.UltraChest
+commands:
+  ultrachest:
+    description: Main UltraChest command
+    aliases: [uc, ultrachests]
+permissions:
+    ultrachest.open:
+        description: Allows you to open ultrachests
+        default: true
+    ultrachest.give:
+        description: Allows you to give ultrachests using /ultrachest give <playerName> [all,random,<name>] <amount>
+        default: op
+    ultrachest.register:
+        description: Allows you to register items using /ultrachest register
+        default: op
+    ultrachest.list:
+        description: Allow you to see the names of all chests using /ultrachest chests
+        default: op

@@ -1,0 +1,18 @@
+name: BetterBeacons
+version: 2.0
+api-version: 1.13
+author: GitHub/jakubvanko
+main: sk.jakubvanko.betterbeacons.BetterBeacons
+softdepend: [Vault]
+commands:
+  betterbeacons:
+    description: Main BetterBeacons command
+    aliases: [bb, betterbeacon]
+
+permissions:
+  betterbeacons.usebeacon:
+    description: Allows you to interact with beacons
+    default: true
+  betterbeacons.givetool:
+    description: Allows you to use /betterbeacons tool command
+    default: op

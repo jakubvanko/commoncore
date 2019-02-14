@@ -1,0 +1,6 @@
+/__external
+out
+.idea
+*.ipr
+*.iml
+*.iws
