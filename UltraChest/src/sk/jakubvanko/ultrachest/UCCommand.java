@@ -150,7 +150,13 @@ public class UCCommand implements CommandExecutor {
                         return true;
                     }
                     Player player = (Player) sender;
-                    ItemStack playerItemStack = player.getInventory().getItemInMainHand();
+                    ItemStack playerItemStack;
+                    if (CCMaterial.isNewVersion()){
+                        playerItemStack = player.getInventory().getItemInMainHand();
+                    }
+                    else {
+                        playerItemStack = player.getItemInHand();
+                    }
                     if (playerItemStack == null) return true;
                     if (playerItemStack.getType() == CCMaterial.AIR.parseMaterial()) return true;
                     ItemStack itemToRegister = new ItemStack(playerItemStack);

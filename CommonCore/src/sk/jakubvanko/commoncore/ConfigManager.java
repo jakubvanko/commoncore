@@ -204,8 +204,17 @@ public class ConfigManager {
                 String recipeRow2 = recipeRowSection.getString("row_2", "   ");
                 String recipeRow3 = recipeRowSection.getString("row_3", "   ");
                 shapedRecipe.shape(recipeRow1, recipeRow2, recipeRow3);
-                for (Map.Entry<Character, CCMaterial> ingredientEntry : ingredientsMap.entrySet()) {
-                    shapedRecipe.setIngredient(ingredientEntry.getKey(), ingredientEntry.getValue().parseMaterial());
+                for (Character ingredientCharacter : recipeRow1.toCharArray()){
+                    if (ingredientCharacter == ' ') continue;
+                    shapedRecipe.setIngredient(ingredientCharacter, ingredientsMap.get(ingredientCharacter).parseMaterial());
+                }
+                for (Character ingredientCharacter : recipeRow2.toCharArray()){
+                    if (ingredientCharacter == ' ') continue;
+                    shapedRecipe.setIngredient(ingredientCharacter, ingredientsMap.get(ingredientCharacter).parseMaterial());
+                }
+                for (Character ingredientCharacter : recipeRow3.toCharArray()){
+                    if (ingredientCharacter == ' ') continue;
+                    shapedRecipe.setIngredient(ingredientCharacter, ingredientsMap.get(ingredientCharacter).parseMaterial());
                 }
                 recipeMap.put(itemIdentifier, shapedRecipe);
             }
