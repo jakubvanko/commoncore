@@ -1,5 +1,6 @@
 package sk.jakubvanko.commoncore;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -54,7 +55,8 @@ public abstract class EventManager implements Listener {
         if (CCMaterial.isNewVersion()) {
             clickedInventory = event.getClickedInventory();
         } else {
-            clickedInventory = event.getView().getTopInventory();
+            clickedInventory = event.getInventory();
+            if (event.getRawSlot() >= clickedInventory.getSize()) return null;
         }
         if (clickedInventory == null) return null;
         if (clickedInventory.getHolder() != null) return null;
