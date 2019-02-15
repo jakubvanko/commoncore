@@ -1,6 +1,5 @@
 package sk.jakubvanko.commoncore;
 
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -71,7 +70,11 @@ public class ConfigManager {
         if (itemMeta.hasDisplayName()) {
             itemData.add("    name: '" + itemMeta.getDisplayName() + "'");
         }
-        itemData.add("    material: " + itemStack.getType().name());
+        String materialName = itemStack.getType().name();
+        if (!CCMaterial.isNewVersion()){
+            materialName += ":" + itemStack.getData().getData();
+        }
+        itemData.add("    material: " + materialName);
         itemData.add("    amount: " + itemStack.getAmount());
         // This assures compatibility with older versions
         if (CCMaterial.isNewVersion()) {
