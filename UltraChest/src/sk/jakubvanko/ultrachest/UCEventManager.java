@@ -86,6 +86,8 @@ public class UCEventManager extends EventManager {
         Inventory defaultInventory = defaultInventoryData.getInventory();
         Inventory newInventory = Bukkit.createInventory(null, defaultInventory.getSize(), defaultInventory.getTitle());
         for (int i = 0; i < defaultInventory.getSize(); i++) {
+            if (defaultInventory.getItem(i) == null) continue;
+            if (defaultInventory.getItem(i).getType() == CCMaterial.AIR.parseMaterial()) continue;
             newInventory.setItem(i, new ItemStack(defaultInventory.getItem(i)));
         }
         Map<Integer, List<ClickAction>> slotActionMap = defaultInventoryData.getSlotActionMap();
@@ -126,7 +128,9 @@ public class UCEventManager extends EventManager {
         if (ultraChestInventoryData == null) return;
         if (!ultraChestInventoryData.getInventory().equals(inventory)) return;
         if (playerData.getChoicesLeft() > 0) {
-            player.getInventory().addItem(playerData.getChestItem());
+            ItemStack newChestItem = new ItemStack(playerData.getChestItem());
+            newChestItem.setAmount(1);
+            player.getInventory().addItem(newChestItem);
         } else {
             RewardRevealer rewardRevealer = playerData.getRewardRevealer();
             int taskId = rewardRevealer.getTaskId();
