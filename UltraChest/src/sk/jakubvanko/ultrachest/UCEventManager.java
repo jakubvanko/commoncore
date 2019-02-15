@@ -30,7 +30,7 @@ public class UCEventManager extends EventManager {
     private Plugin plugin;
     private RewardGenerator rewardGenerator;
 
-    public UCEventManager(Plugin plugin, UCConfigData configData, VaultManager vaultManager) {
+    public UCEventManager(Plugin plugin, UCConfigData configData) {
         super(configData);
         this.configData = configData;
         messageManager = new MessageManager(configData.getMessageMap());
@@ -102,7 +102,10 @@ public class UCEventManager extends EventManager {
         if (clickedItem == null) return;
         if (CCMaterial.AIR.isSameMaterial(clickedItem)) return;
         Player player = (Player) event.getWhoClicked();
-        InventoryData playerInventoryData = playerDataMap.get(player).getPlayerInventoryData();
+        if (player == null) return;
+        PlayerData playerData = playerDataMap.get(player);
+        if (playerData == null) return;
+        InventoryData playerInventoryData = playerData.getPlayerInventoryData();
         if (playerInventoryData == null) return;
         if (clickedInventory.equals(playerInventoryData.getInventory())) {
             Integer clickedSlot = event.getSlot();

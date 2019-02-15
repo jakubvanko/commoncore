@@ -6,7 +6,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import sk.jakubvanko.commoncore.MessageManager;
 import sk.jakubvanko.commoncore.Metrics;
-import sk.jakubvanko.commoncore.VaultManager;
 
 import java.util.Map;
 
@@ -24,10 +23,9 @@ public class UltraChest extends JavaPlugin {
             Bukkit.getServer().addRecipe(recipeEntry.getValue());
         }
         messageManager = new MessageManager(configData.getMessageMap());
-        VaultManager vaultManager = new VaultManager(messageManager);
         // Setting up event manager and registering events
         PluginManager pluginManager = getServer().getPluginManager();
-        UCEventManager eventManager = new UCEventManager(this, configData, vaultManager);
+        UCEventManager eventManager = new UCEventManager(this, configData);
         pluginManager.registerEvents(eventManager, this);
         // Registering commands
         getCommand("ultrachest").setExecutor(new UCCommand(configManager, configData));

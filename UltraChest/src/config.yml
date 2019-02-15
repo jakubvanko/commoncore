@@ -121,8 +121,6 @@ items:
       - "§eto recieve your rewards"
     enchantments:
       ARROW_INFINITE: 10
-    item_flags:
-      - HIDE_ENCHANTS
   rare_chest_item:
     <<: *chest_template
     name: "§bRare §7Ultra Chest"
