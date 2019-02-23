@@ -57,4 +57,17 @@ public class VaultManager {
         if (money <= 0) return true;
         return economy.withdrawPlayer(player, money).transactionSuccess();
     }
+
+    /**
+     * Tries to deposit money and returns the result (False if Economy is null)
+     *
+     * @param player Player to deposit money to
+     * @param money  Amount of money to deposit
+     * @return Boolean representing the result of the transaction
+     */
+    public boolean depositMoney(Player player, int money){
+        if (economy == null) return false;
+        if (money <= 0) return true;
+        return economy.depositPlayer(player, money).transactionSuccess();
+    }
 }
