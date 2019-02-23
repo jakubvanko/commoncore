@@ -27,7 +27,7 @@ general:
     subtraction_time: 60
 
 messages:
-  logo: '§3[§aBetter§6Beacons§3]§f'
+  logo: '§3[§aBetter§6Beacons§3]§f' # its abbreviation is "%logo"
   secondary_set_low_tier: "%logo §cSecondary Effect was set but it will activate once the beacon tier is 4."
   secondary_set_no_primary: "%logo §cSecondary Effect was set but it will activate once the primary effect is set."
   low_tier: "%logo §cYour beacon tier is too low! Needed tier is %nt, and your tier is only %bt."
@@ -58,13 +58,12 @@ items:
     unbreakable: true
     lore:
       - "§3§oUse this tool"
-      - "§3§oon a beacon"
+      - "§3§oon a beacon to"
       - "§3§ointeract with it!"
     enchantments:
       ARROW_INFINITE: 10
     item_flags:
       - HIDE_ENCHANTS
-
   beacon_icon:
     name: "§3§lSetup This Beacon"
     material: "BEACON"
