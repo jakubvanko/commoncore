@@ -75,10 +75,9 @@ messages:
     §3------------------%logo------------------
     §e/ultrachest give <player> <chest, all, random> [amount] [args] §e- give specified chest to the given player
     §e/ultrachest chests§e - writes all chest names
-    §e/ultrachest register§e - registers new prize
+    §e/ultrachest register§e - registers the item you are holding into the config
   item_registered: |
-    %logo §eItem successfully registered, please specify the odds and amounts in the config file
-    %logo §eThe identifier of the registered item is: §9%itemidentifier
+    %logo §eItem successfully registered, the identifier of the registered item is: §9%itemidentifier
 
 items:
   before_click_icon:
