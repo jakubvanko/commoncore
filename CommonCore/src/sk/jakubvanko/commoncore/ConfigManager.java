@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * Represents a config manager and loader
@@ -137,6 +138,28 @@ public class ConfigManager {
         if (itemSection == null) return itemMap;
         for (String itemIdentifier : itemSection.getKeys(false)) {
             ConfigurationSection dataSection = itemSection.getConfigurationSection(itemIdentifier);
+            
+            // Modifications for nice compatibility with Custom Items and Textures
+            String customItemName = dataSection.getString("CustomItemName");
+            if (customItemName != null) {
+            	try {
+            		Object customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
+            		
+            		// Intentionally cause NullPointerException if it is not available
+            		Object customItemSet = customItemsPlugin.getClass().getMethod("getSet").invoke(customItemsPlugin);
+            		Object customItem = customItemSet.getClass().getMethod("getItem", String.class).invoke(customItemSet, customItemName);
+            		if (customItem == null) {
+            			Bukkit.getLogger().warning("A custom item with name '" + customItemName + "' was requested, but it doesn't exist");
+            		} else {
+            			itemMap.put(itemIdentifier, (ItemStack) customItem.getClass().getMethod("create", int.class).invoke(customItem, 1));
+            			continue;
+            		}
+            	} catch (Exception ex) {
+            		Bukkit.getLogger().log(Level.WARNING, "Attempted to load a custom item from the config, but it looks like Custom Items and Textures is not installed", ex);
+            	}
+            }
+            // End of modifications
+            
             String name = dataSection.getString("name", null);
             String materialName = dataSection.getString("material", "AIR");
             CCMaterial ccMaterial = CCMaterial.fromString(materialName);
