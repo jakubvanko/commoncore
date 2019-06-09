@@ -72,7 +72,7 @@ public class ConfigManager {
             itemData.add("    name: '" + itemMeta.getDisplayName() + "'");
         }
         String materialName = itemStack.getType().name();
-        if (!CCMaterial.isNewVersion()){
+        if (!CCMaterial.isNewVersion()) {
             materialName += ":" + itemStack.getData().getData();
         }
         itemData.add("    material: " + materialName);
@@ -138,28 +138,28 @@ public class ConfigManager {
         if (itemSection == null) return itemMap;
         for (String itemIdentifier : itemSection.getKeys(false)) {
             ConfigurationSection dataSection = itemSection.getConfigurationSection(itemIdentifier);
-            
+
             // Modifications for nice compatibility with Custom Items and Textures
             String customItemName = dataSection.getString("CustomItemName");
             if (customItemName != null) {
-            	try {
-            		Object customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
-            		
-            		// Intentionally cause NullPointerException if it is not available
-            		Object customItemSet = customItemsPlugin.getClass().getMethod("getSet").invoke(customItemsPlugin);
-            		Object customItem = customItemSet.getClass().getMethod("getItem", String.class).invoke(customItemSet, customItemName);
-            		if (customItem == null) {
-            			Bukkit.getLogger().warning("A custom item with name '" + customItemName + "' was requested, but it doesn't exist");
-            		} else {
-            			itemMap.put(itemIdentifier, (ItemStack) customItem.getClass().getMethod("create", int.class).invoke(customItem, 1));
-            			continue;
-            		}
-            	} catch (Exception ex) {
-            		Bukkit.getLogger().log(Level.WARNING, "Attempted to load a custom item from the config, but it looks like Custom Items and Textures is not installed", ex);
-            	}
+                try {
+                    Object customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
+
+                    // Intentionally cause NullPointerException if it is not available
+                    Object customItemSet = customItemsPlugin.getClass().getMethod("getSet").invoke(customItemsPlugin);
+                    Object customItem = customItemSet.getClass().getMethod("getItem", String.class).invoke(customItemSet, customItemName);
+                    if (customItem == null) {
+                        Bukkit.getLogger().warning("A custom item with name '" + customItemName + "' was requested, but it doesn't exist");
+                    } else {
+                        itemMap.put(itemIdentifier, (ItemStack) customItem.getClass().getMethod("create", int.class).invoke(customItem, 1));
+                        continue;
+                    }
+                } catch (Exception ex) {
+                    Bukkit.getLogger().log(Level.WARNING, "Attempted to load a custom item from the config, but it looks like Custom Items and Textures is not installed", ex);
+                }
             }
             // End of modifications
-            
+
             String name = dataSection.getString("name", null);
             String materialName = dataSection.getString("material", "AIR");
             CCMaterial ccMaterial = CCMaterial.fromString(materialName);
@@ -191,7 +191,7 @@ public class ConfigManager {
                     .setLore(lore)
                     .setItemFlags(itemFlags)
                     .setEnchantments(enchantments);
-            if (name != null){
+            if (name != null) {
                 itemBuilder.setName(name);
             }
             ItemStack createdItem = itemBuilder.build();
@@ -230,15 +230,15 @@ public class ConfigManager {
                 String recipeRow2 = recipeRowSection.getString("row_2", "   ");
                 String recipeRow3 = recipeRowSection.getString("row_3", "   ");
                 shapedRecipe.shape(recipeRow1, recipeRow2, recipeRow3);
-                for (Character ingredientCharacter : recipeRow1.toCharArray()){
+                for (Character ingredientCharacter : recipeRow1.toCharArray()) {
                     if (ingredientCharacter == ' ') continue;
                     shapedRecipe.setIngredient(ingredientCharacter, ingredientsMap.get(ingredientCharacter).parseMaterial());
                 }
-                for (Character ingredientCharacter : recipeRow2.toCharArray()){
+                for (Character ingredientCharacter : recipeRow2.toCharArray()) {
                     if (ingredientCharacter == ' ') continue;
                     shapedRecipe.setIngredient(ingredientCharacter, ingredientsMap.get(ingredientCharacter).parseMaterial());
                 }
-                for (Character ingredientCharacter : recipeRow3.toCharArray()){
+                for (Character ingredientCharacter : recipeRow3.toCharArray()) {
                     if (ingredientCharacter == ' ') continue;
                     shapedRecipe.setIngredient(ingredientCharacter, ingredientsMap.get(ingredientCharacter).parseMaterial());
                 }
@@ -275,9 +275,11 @@ public class ConfigManager {
         if (chestInventorySection != null) {
             for (String inventoryIdentifier : chestInventorySection.getKeys(false)) {
                 ConfigurationSection dataSection = chestInventorySection.getConfigurationSection(inventoryIdentifier);
-                Inventory chestInventory = createChestInventory(dataSection);
+                int size = dataSection.getInt("size", 1);
+                String title = dataSection.getString("title", "not_specified");
+                Inventory chestInventory = Bukkit.createInventory(null, size, title);
                 ConfigurationSection contentSection = dataSection.getConfigurationSection("content");
-                InventoryData inventoryData = setupChestInventory(chestInventory, contentSection, itemStackMap);
+                InventoryData inventoryData = setupChestInventory(chestInventory, contentSection, itemStackMap, title);
                 inventoryMap.put(inventoryIdentifier, inventoryData);
             }
         }
@@ -290,6 +292,7 @@ public class ConfigManager {
      * @param dataSection Configuration section containing title and size
      * @return New, empty chest inventory
      */
+    @Deprecated
     protected Inventory createChestInventory(ConfigurationSection dataSection) {
         int size = dataSection.getInt("size", 1);
         String title = dataSection.getString("title", "not_specified");
@@ -304,7 +307,7 @@ public class ConfigManager {
      * @param itemStackMap   Map of item identifiers and their corresponding item stacks
      * @return Complete inventory data holder
      */
-    protected InventoryData setupChestInventory(Inventory chestInventory, ConfigurationSection contentSection, Map<String, ItemStack> itemStackMap) {
+    protected InventoryData setupChestInventory(Inventory chestInventory, ConfigurationSection contentSection, Map<String, ItemStack> itemStackMap, String title) {
         // Each inventory slot has a number of actions that will be called on click
         Map<Integer, List<ClickAction>> slotToActionMap = new HashMap<>();
         for (String inventorySlot : contentSection.getKeys(false)) {
@@ -335,7 +338,7 @@ public class ConfigManager {
                 slotToActionMap.put(inventorySlotNumber, clickActions);
             }
         }
-        return new InventoryData(chestInventory, slotToActionMap);
+        return new InventoryData(chestInventory, slotToActionMap, title);
     }
 
     /**

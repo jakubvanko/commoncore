@@ -14,6 +14,8 @@ public final class InventoryData {
 
     private Map<Integer, List<ClickAction>> slotActionMap;
 
+    private String inventoryTitle;
+
     /**
      * Gets the linked inventory
      *
@@ -51,6 +53,14 @@ public final class InventoryData {
     }
 
     /**
+     * Gets the title of the inventory
+     * @return The title of the inventory
+     */
+    public String getInventoryTitle() {
+        return inventoryTitle;
+    }
+
+    /**
      * Creates a new inventory data holder
      *
      * @param inventory     Linked inventory
@@ -59,6 +69,19 @@ public final class InventoryData {
     public InventoryData(Inventory inventory, Map<Integer, List<ClickAction>> slotActionMap) {
         this.inventory = inventory;
         this.slotActionMap = slotActionMap;
+    }
+
+    /**
+     * Creates a new inventory data holder
+     *
+     * @param inventory         Linked inventory
+     * @param slotActionMap     Map representing inventory slots linked to different actions
+     * @param inventoryTitle    The title of the inventory
+     */
+    public InventoryData(Inventory inventory, Map<Integer, List<ClickAction>> slotActionMap, String inventoryTitle) {
+        this.inventory = inventory;
+        this.slotActionMap = slotActionMap;
+        this.inventoryTitle = inventoryTitle;
     }
 
     /**

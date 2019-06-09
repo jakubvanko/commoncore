@@ -84,7 +84,7 @@ public class UCEventManager extends EventManager {
     private InventoryData generateInventoryData() {
         InventoryData defaultInventoryData = configData.getInventoryDataMap().get("ultrachest_menu");
         Inventory defaultInventory = defaultInventoryData.getInventory();
-        Inventory newInventory = Bukkit.createInventory(null, defaultInventory.getSize(), defaultInventory.getTitle());
+        Inventory newInventory = Bukkit.createInventory(null, defaultInventory.getSize(), defaultInventoryData.getInventoryTitle());
         for (int i = 0; i < defaultInventory.getSize(); i++) {
             if (defaultInventory.getItem(i) == null) continue;
             if (defaultInventory.getItem(i).getType() == CCMaterial.AIR.parseMaterial()) continue;
