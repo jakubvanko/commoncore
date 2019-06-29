@@ -139,6 +139,14 @@ items:
     enchantments:
       DAMAGE_ALL: 3
       ARROW_DAMAGE: 1
+    item_flags:
+      - HIDE_ENCHANTS
+    item_attributes:
+      GENERIC_ATTACK_DAMAGE:
+        HAND:
+          ADD_NUMBER: 0.5
+          ADD_SCALAR: 0.7
+          MULTIPLY_SCALAR_1: 0.8
 
 recipes:
   # You can use this if you want to make your chests craftable
