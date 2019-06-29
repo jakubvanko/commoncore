@@ -24,7 +24,7 @@ public class ItemBuilder {
     protected List<String> lore;
     protected List<ItemFlag> itemFlags;
     protected Map<Enchantment, Integer> enchantments;
-    protected Map<Attribute, AttributeModifier> attributeModifiers;
+    protected Map<Attribute, List<AttributeModifier>> attributeModifiers;
 
     /**
      * Creates a new itemstack builder with a given ccMaterial
@@ -118,7 +118,7 @@ public class ItemBuilder {
      * @param attributeModifiers Attribute modifiers to set the builder to
      * @return Itself to chain commands
      */
-    public ItemBuilder setAttributeModifiers(Map<Attribute, AttributeModifier> attributeModifiers) {
+    public ItemBuilder setAttributeModifiers(Map<Attribute, List<AttributeModifier>> attributeModifiers) {
         this.attributeModifiers = attributeModifiers;
         return this;
     }
@@ -156,17 +156,19 @@ public class ItemBuilder {
                 itemMeta.addItemFlags(itemFlag);
             }
         }
-        if (attributeModifiers != null) {
-            for (Map.Entry<Attribute, AttributeModifier> entry : attributeModifiers.entrySet()) {
-                itemMeta.addAttributeModifier(entry.getKey(), entry.getValue());
-            }
-        }
         itemStack.setItemMeta(itemMeta);
         // This assures compatibility with older versions
         if (CCMaterial.isNewVersion()) {
             itemMeta.setUnbreakable(unbreakable);
             Damageable damageable = (Damageable) itemMeta;
             damageable.setDamage(damage);
+            if (attributeModifiers != null) {
+                for (Map.Entry<Attribute, List<AttributeModifier>> entry : attributeModifiers.entrySet()) {
+                    for (AttributeModifier attributeModifier : entry.getValue()) {
+                        itemMeta.addAttributeModifier(entry.getKey(), attributeModifier);
+                    }
+                }
+            }
             itemStack.setItemMeta((ItemMeta) damageable);
         }
         return itemStack;

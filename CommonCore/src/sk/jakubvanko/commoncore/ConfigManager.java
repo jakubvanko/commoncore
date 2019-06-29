@@ -1,6 +1,9 @@
 package sk.jakubvanko.commoncore;
 
+import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,6 +11,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +88,28 @@ public class ConfigManager {
             if (itemMeta.isUnbreakable()) {
                 itemData.add("    unbreakable: " + "true");
             }
+            Map<Attribute, Collection<AttributeModifier>> attributeModifierMap = itemMeta.getAttributeModifiers().asMap();
+            if (attributeModifierMap != null) {
+                itemData.add("    item_attributes:");
+                for (Map.Entry<Attribute, Collection<AttributeModifier>> entry : attributeModifierMap.entrySet()) {
+                    itemData.add("      " + entry.getKey().name() + ":");
+                    // Sort the collection by attribute modifier slot
+                    Map<EquipmentSlot, List<AttributeModifier>> slotModifierMap = new HashMap<>();
+                    for (AttributeModifier attributeModifier : entry.getValue()) {
+                        EquipmentSlot equipmentSlot = attributeModifier.getSlot();
+                        slotModifierMap.computeIfAbsent(equipmentSlot, k -> new ArrayList<>());
+                        List<AttributeModifier> attributeModifierList = slotModifierMap.get(equipmentSlot);
+                        attributeModifierList.add(attributeModifier);
+                    }
+                    // Now write them properly
+                    for (Map.Entry<EquipmentSlot, List<AttributeModifier>> equipmentEntry : slotModifierMap.entrySet()){
+                        itemData.add("        " + equipmentEntry.getKey().name() + ":");
+                        for (AttributeModifier attributeModifier : equipmentEntry.getValue()){
+                            itemData.add("          " + attributeModifier.getOperation().name() + ": " + attributeModifier.getAmount());
+                        }
+                    }
+                }
+            }
         }
         List<String> loreList = itemMeta.getLore();
         if (loreList != null) {
@@ -143,7 +169,7 @@ public class ConfigManager {
             String customItemName = dataSection.getString("CustomItemName");
             if (customItemName != null) {
                 try {
-                    Object customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
+                    Plugin customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
 
                     // Intentionally cause NullPointerException if it is not available
                     Object customItemSet = customItemsPlugin.getClass().getMethod("getSet").invoke(customItemsPlugin);
@@ -184,6 +210,7 @@ public class ConfigManager {
                     enchantments.put(enchantment, level);
                 }
             }
+
             ItemBuilder itemBuilder = new ItemBuilder(ccMaterial)
                     .setAmount(amount)
                     .setDamage(damage)
@@ -193,6 +220,33 @@ public class ConfigManager {
                     .setEnchantments(enchantments);
             if (name != null) {
                 itemBuilder.setName(name);
+            }
+            // Adding attribute modifiers
+            if (CCMaterial.isNewVersion()) {
+                ConfigurationSection attributesSection = dataSection.getConfigurationSection("item_attributes");
+                Map<Attribute, List<AttributeModifier>> attributeModifiers = new HashMap<>();
+                if (attributesSection != null) {
+                    for (String itemAttributeName : attributesSection.getKeys(false)) {
+                        Attribute attribute = Attribute.valueOf(itemAttributeName);
+                        List<AttributeModifier> attributeModifierList = new ArrayList<>();
+                        ConfigurationSection itemAttributeSection = attributesSection.getConfigurationSection(itemAttributeName);
+                        if (itemAttributeSection == null) continue;
+                        for (String itemAttributeSlot : itemAttributeSection.getKeys(false)) {
+                            EquipmentSlot attributeSlot = EquipmentSlot.valueOf(itemAttributeSlot);
+                            ConfigurationSection itemAttributeSlotSection = itemAttributeSection.getConfigurationSection(itemAttributeSlot);
+                            if (itemAttributeSlotSection == null) continue;
+                            for (String itemAttributeSlotOperation : itemAttributeSlotSection.getKeys(false)) {
+                                AttributeModifier.Operation attributeOperation = AttributeModifier.Operation.valueOf(itemAttributeSlotOperation);
+                                double attributeOperationAmount = itemAttributeSlotSection.getDouble(itemAttributeSlotOperation, 1);
+                                AttributeModifier attributeModifier = new AttributeModifier(UUID.randomUUID(), itemAttributeName,
+                                        attributeOperationAmount, attributeOperation, attributeSlot);
+                                attributeModifierList.add(attributeModifier);
+                            }
+                        }
+                        attributeModifiers.put(attribute, attributeModifierList);
+                    }
+                }
+                itemBuilder.setAttributeModifiers(attributeModifiers);
             }
             ItemStack createdItem = itemBuilder.build();
             itemMap.put(itemIdentifier, createdItem);
