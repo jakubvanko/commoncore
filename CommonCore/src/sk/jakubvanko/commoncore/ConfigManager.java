@@ -88,24 +88,27 @@ public class ConfigManager {
             if (itemMeta.isUnbreakable()) {
                 itemData.add("    unbreakable: " + "true");
             }
-            Map<Attribute, Collection<AttributeModifier>> attributeModifierMap = itemMeta.getAttributeModifiers().asMap();
-            if (attributeModifierMap != null) {
-                itemData.add("    item_attributes:");
-                for (Map.Entry<Attribute, Collection<AttributeModifier>> entry : attributeModifierMap.entrySet()) {
-                    itemData.add("      " + entry.getKey().name() + ":");
-                    // Sort the collection by attribute modifier slot
-                    Map<EquipmentSlot, List<AttributeModifier>> slotModifierMap = new HashMap<>();
-                    for (AttributeModifier attributeModifier : entry.getValue()) {
-                        EquipmentSlot equipmentSlot = attributeModifier.getSlot();
-                        slotModifierMap.computeIfAbsent(equipmentSlot, k -> new ArrayList<>());
-                        List<AttributeModifier> attributeModifierList = slotModifierMap.get(equipmentSlot);
-                        attributeModifierList.add(attributeModifier);
-                    }
-                    // Now write them properly
-                    for (Map.Entry<EquipmentSlot, List<AttributeModifier>> equipmentEntry : slotModifierMap.entrySet()){
-                        itemData.add("        " + equipmentEntry.getKey().name() + ":");
-                        for (AttributeModifier attributeModifier : equipmentEntry.getValue()){
-                            itemData.add("          " + attributeModifier.getOperation().name() + ": " + attributeModifier.getAmount());
+            Multimap<Attribute, AttributeModifier> attributeModifierMultimap = itemMeta.getAttributeModifiers();
+            if (attributeModifierMultimap != null) {
+                Map<Attribute, Collection<AttributeModifier>> attributeModifierMap = attributeModifierMultimap.asMap();
+                if (attributeModifierMap != null) {
+                    itemData.add("    item_attributes:");
+                    for (Map.Entry<Attribute, Collection<AttributeModifier>> entry : attributeModifierMap.entrySet()) {
+                        itemData.add("      " + entry.getKey().name() + ":");
+                        // Sort the collection by attribute modifier slot
+                        Map<EquipmentSlot, List<AttributeModifier>> slotModifierMap = new HashMap<>();
+                        for (AttributeModifier attributeModifier : entry.getValue()) {
+                            EquipmentSlot equipmentSlot = attributeModifier.getSlot();
+                            slotModifierMap.computeIfAbsent(equipmentSlot, k -> new ArrayList<>());
+                            List<AttributeModifier> attributeModifierList = slotModifierMap.get(equipmentSlot);
+                            attributeModifierList.add(attributeModifier);
+                        }
+                        // Now write them properly
+                        for (Map.Entry<EquipmentSlot, List<AttributeModifier>> equipmentEntry : slotModifierMap.entrySet()) {
+                            itemData.add("        " + equipmentEntry.getKey().name() + ":");
+                            for (AttributeModifier attributeModifier : equipmentEntry.getValue()) {
+                                itemData.add("          " + attributeModifier.getOperation().name() + ": " + attributeModifier.getAmount());
+                            }
                         }
                     }
                 }
