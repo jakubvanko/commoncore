@@ -156,6 +156,7 @@ export const StatsContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     margin: 0 5vw;
+    padding-top: 1.6rem;
 `;
 
 export const StatsDescription = styled.h3`

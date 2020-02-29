@@ -13,7 +13,9 @@
     "@docusaurus/preset-classic": "^2.0.0-alpha.43",
     "classnames": "^2.2.6",
     "react": "^16.8.4",
+    "react-countup": "^4.3.3",
     "react-dom": "^16.8.4",
+    "react-spinners": "^0.8.0",
     "react-typist": "^2.0.5",
     "styled-components": "^5.0.1"
   },
