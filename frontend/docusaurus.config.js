@@ -15,7 +15,7 @@ module.exports = {
                 src: 'img/logo.svg',
             },
             links: [
-                {to: 'docs/doc1', label: 'Docs', position: 'right'},
+                {to: 'docs/01_getting_started', label: 'Docs', position: 'right'},
                 {
                     href: 'https://github.com/jakubvanko/commoncore',
                     label: 'GitHub',
@@ -31,7 +31,7 @@ module.exports = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl:
-                        'https://github.com/facebook/docusaurus/edit/master/website/',
+                        'https://github.com/jakubvanko/commoncore/tree/master/frontend',
                 },
                 theme: {
                     customCss: require.resolve('./src/css/custom.css')

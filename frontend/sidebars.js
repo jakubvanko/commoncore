@@ -7,7 +7,8 @@
 
 module.exports = {
   someSidebar: {
-    Docusaurus: ['doc1', 'doc2', 'doc3'],
-    Features: ['mdx'],
+    CommonCore: ['01_getting_started', 'doc2', 'doc3'],
+    BetterBeacons: ['mdx'],
+    UltraChest: []
   },
 };

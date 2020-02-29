@@ -6,15 +6,15 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy"
+    "deploy": "docusaurus build && scp -r ./build/* root@104.248.18.245:/var/www/commoncore.jakubvanko.com/html"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.43",
     "@docusaurus/preset-classic": "^2.0.0-alpha.43",
     "classnames": "^2.2.6",
-    "react": "^16.8.4",
+    "react": "^16.13.0",
     "react-countup": "^4.3.3",
-    "react-dom": "^16.8.4",
+    "react-dom": "^16.13.0",
     "react-spinners": "^0.8.0",
     "react-typist": "^2.0.5",
     "styled-components": "^5.0.1"

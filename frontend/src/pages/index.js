@@ -1,11 +1,11 @@
-import React, {Suspense} from "react";
-const CommonCore = React.lazy(() => import("../scenes/CommonCore/CommonCore"));
-import Loader from "../components/Loader/Loader";
+import React from "react";
+import CommonCore from "../scenes/CommonCore/CommonCore";
+// React Suspense is not yet supported for server-side React
+// and therefore Docusaurus cannot build this if we use it.
+// Once it is supported, use the Loader component for react suspense.
 
 const Home = () => (
-    <Suspense fallback={<Loader/>}>
-        <CommonCore/>
-    </Suspense>
+    <CommonCore/>
 );
 
 export default Home;
