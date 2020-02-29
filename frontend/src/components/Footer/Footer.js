@@ -47,14 +47,17 @@ const Copyright = styled.p`
 const Footer = () => (
     <Container>
         <LinkContainer>
-            <StyledLink>GitHub</StyledLink>
-            <StyledLink>Documentation</StyledLink>
+            <StyledLink href={"https://github.com/jakubvanko/commoncore"} target={"_blank"}
+                        rel={"noopener noreferrer"}>GitHub</StyledLink>
+            <StyledLink to={"docs/doc1"}>Documentation</StyledLink>
             <StyledLink>BetterBeacons</StyledLink>
             <StyledLink>UltraChest</StyledLink>
             <StyledLink>License</StyledLink>
         </LinkContainer>
         <Copyright>
-            <div>This work is dedicated to the public domain. Rights for parts of the web design go to their respective owners.</div>
+            <div>This work is dedicated to the public domain. Rights for parts of the web design go to their respective
+                owners.
+            </div>
             <div>Copyright &copy; 2020, Jakub Vanko.</div>
         </Copyright>
     </Container>

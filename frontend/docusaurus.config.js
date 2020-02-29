@@ -1,7 +1,7 @@
 module.exports = {
     title: 'CommonCore',
     tagline: 'A sensible Bukkit library to bootstrap you Minecraft Plugins',
-    url: 'https://your-docusaurus-test-site.com',
+    url: 'https://commoncore.jakubvanko.com',
     baseUrl: '/',
     favicon: 'img/favicon.ico',
     organizationName: 'jakubvanko', // Usually your GitHub org/user name.
@@ -17,7 +17,7 @@ module.exports = {
             links: [
                 {to: 'docs/doc1', label: 'Docs', position: 'right'},
                 {
-                    href: 'https://github.com/facebook/docusaurus',
+                    href: 'https://github.com/jakubvanko/commoncore',
                     label: 'GitHub',
                     position: 'right',
                 },
