@@ -12,6 +12,12 @@ const Container = styled.footer`
 const LinkContainer = styled.div`
     display: flex;
     justify-content: center;
+    
+    @media (max-width: 700px) {
+        display: grid;
+        grid-template-columns: auto;
+        padding-bottom: 1rem;
+    }
 `;
 
 const StyledLink = styled(Link)`
@@ -23,6 +29,11 @@ const StyledLink = styled(Link)`
     :hover {
         color: white !important;
     }
+    
+    @media (max-width: 700px) {
+        text-align: center;
+        margin: 0.5rem 1.5rem;
+    }
 `;
 
 const Copyright = styled.p`
@@ -30,6 +41,7 @@ const Copyright = styled.p`
     text-align: center;
     margin: 0;
     line-height: 2em;
+    padding: 0 10vw;
 `;
 
 const Footer = () => (

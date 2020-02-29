@@ -6,6 +6,18 @@ export const Container = styled.div`
     box-shadow: 0 3px 10px #0000005E;
     position: relative;
     width: 18vw;
+    
+    @media (max-width: 1400px) {
+        width: 22vw;
+    }
+    
+    @media (max-width: 1250px) {
+        width: 25vw;
+    }
+    
+    @media (max-width: 1000px) {
+        width: 300px;
+    }
 `;
 
 export const Quote = styled.div`
