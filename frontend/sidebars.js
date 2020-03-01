@@ -7,8 +7,8 @@
 
 module.exports = {
   someSidebar: {
-    CommonCore: ['01_getting_started', '02_yaml', 'doc3'],
-    BetterBeacons: ['mdx'],
+    CommonCore: ['01_getting_started', '02_yaml', '03_configuration'],
+    BetterBeacons: [],
     UltraChest: []
   },
 };
