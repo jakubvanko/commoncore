@@ -339,6 +339,16 @@ Will result into:
 <iframe style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}} src="https://www.youtube.com/embed/K4JprGvXQMY" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
+### Custom Item and Textures (experimental)
+CommonCore plugins have an experimental support for the 3rd party plugin [Custom Items and Textures](https://dev.bukkit.org/projects/custom-items-and-textures). After the successful setup of [Custom Items and Textures](https://dev.bukkit.org/projects/custom-items-and-textures), a texture for an ItemStack registered in the CommonCore plugin configuration can be provided by specifying a property **CustomItemName**. This new property should define the name of the custom item as given in the [Custom Items and Textures](https://dev.bukkit.org/projects/custom-items-and-textures) editor. **No other properties should be specified.** These items can be than used as any other ItemStacks registered in the item section of the CommonCore plugin configuration.
+
+```yml
+items:
+  custom_item: # custom_item is the unique item identifier
+    CustomItemName: "editor_name" # editor_name is the item name from the CIaT editor
+```
+
+
 
 ## Recipes
 Recipes for **only the registered ItemStacks** can be defined in the recipe section of the configuration. This section is further divided into three parts that are in the form of subordinate keys:
@@ -346,7 +356,7 @@ Recipes for **only the registered ItemStacks** can be defined in the recipe sect
 - shaped_recipes
 - shapeless_recipes
 
-### Recipe example
+#### Recipe example
 ```yml
 recipes:
   ingredients:  # All ingredients have to be defined here
@@ -469,7 +479,3 @@ and into:
 
 
 ## Inventories
-Recipes for **only the registered ItemStacks** can be defined in the recipe section of the configuration. This section is further divided into three parts that are in the form of subordinate keys:
-- ingredients
-- shaped_recipes
-- shapeless_recipes

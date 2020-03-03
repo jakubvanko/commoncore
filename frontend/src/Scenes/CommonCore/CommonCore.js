@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import useBaseUrl from '@docusaurus/useBaseUrl';
 import CountUp from 'react-countup';
 import {
     HeadingContainer,
@@ -117,7 +116,7 @@ const CommonCore = () => {
                             <GitHub width={30}/>
                             GitHub
                         </Button>
-                        <SubLink to={useBaseUrl('docs/doc1')}>
+                        <SubLink to={'docs/01_getting_started'}>
                             Documentation
                             <Arrow width={12}/>
                         </SubLink>
