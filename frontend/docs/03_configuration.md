@@ -74,12 +74,15 @@ messages:
 Default Command is a message that is used by every CommonCore plugin that uses commands. It is a multi-line string and it represents a message sent to a player after they use a command in an incorrect way.
 
 ### Video tutorial
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbmzYmBAteQ" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div style={{position: "relative", paddingBottom: "56.25%", paddingTop: "25px", height: 0}}>
+<iframe style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}} src="https://www.youtube.com/embed/ZbmzYmBAteQ" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 
 ## Items
 All items used in the given CommonCore plugin have to be specified in the item section of the configuration. Every item has its own unique item identifier that is used throught the rest of the configuration. The item identifier is the upper-most key and consists of a sequence of characters.
 
-Once the item identifier has been specified, you can optionally define other properties of the ItemStack. The property "material" is the only mandatory property.
+Once the item identifier has been specified, you can optionally define other properties of the ItemStack. The property "material" is the only mandatory property. If you do not want to define a given property, simply do not write (or remove) it in your configuration.
 
 ### Properties
 There is a number of supported item properties.
@@ -91,8 +94,8 @@ There is a number of supported item properties.
 |amount|Number|
 |damage|Number (if damageable)|
 |unbreakable|true/false|
-|lore|Array of color formatted strings|
-|item_flags|Array of Bukkit ITEM_FLAGS|
+|lore|List of color formatted strings|
+|item_flags|List of Bukkit ITEM_FLAGS|
 |enchantments|*See below for an explanation*|
 |item_attributes|*See below for an explanation*|
 
@@ -145,7 +148,7 @@ items:
     material: "GOLDEN_HOE"
     amount: 1 # Only one item will be needed/generated
 ```
-Specifies the amount of the items in the ItemStack. If an ItemStack with an amount higher than 1 is used in other parts of the plugin, it may cause the plugin to work properly only if the player uses the exact amount of items in the exact same ItemStack.
+Specifies the amount of the items in the ItemStack. The amount will be used for example when you use the ItemStack as a result of a recipe. If an ItemStack with an amount higher than 1 is used in other parts of the plugin, it may cause the plugin to work properly only if the player uses the exact amount of items in the exact same ItemStack.
 
 #### Damage
 ```yml
@@ -170,12 +173,12 @@ Specifies whether the ItemStack is unbreakable. If an unbreakable ItemStack is u
 items:
   TOOL: # TOOL is the unique item identifier
     material: "GOLDEN_HOE"
-    lore: # An array of lore strings
+    lore: # A list of lore strings
       - "Use this tool"     # First lore line
       - "on a beacon to"    # Second lore line
       - "interact with it!" # Third lore line
 ```
-Specifies the lore of the ItemStack as an array of strings, where each line corresponds to one lore line. It also supports color formatting using the "paragraph" **§** symbol.
+Specifies the lore of the ItemStack as a YAML list of strings, where each line corresponds to one lore line. It also supports color formatting using the "paragraph" **§** symbol.
 
 #### Enchantments
 ```yml
@@ -192,10 +195,10 @@ Specifies the enchantments of the ItemStack as subordinate (key: value) pairs wh
 items:
   TOOL: # TOOL is the unique item identifier
     material: "GOLDEN_HOE"
-    item_flags: # An array of item flags
+    item_flags: # A list of item flags
       - HIDE_ENCHANTS       # The enchantments of the item will be hidden
 ```
-Specifies the item flags of the ItemStack as an array of Bukkit item flags. Make sure that your Minecraft server version supports the item flags that you want to use. Using item flags on old Minecraft versions will break the plugin.
+Specifies the item flags of the ItemStack as a YAML list of Bukkit item flags. Make sure that your Minecraft server version supports the item flags that you want to use. Using item flags on old Minecraft versions will break the plugin.
 
 ##### Item flag list
 | Item flag | Description |
@@ -265,7 +268,208 @@ Full list of equipment slots can be found [using this link.](https://hub.spigotm
 Full list of equipment slots can be found [using this link.](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/attribute/AttributeModifier.Operation.html)
 
 ### Item examples
-TODO
+
+#### Example 1
+Definition in the configuration file:
+```yml
+items:
+    common_chest_item: # common_chest_item is the unique item identifier
+      material: CHEST
+        name: "§fCommon §7Ultra Chest"
+      lore:
+        - "§ePlace this on the ground"
+        - "§eand choose from mystery crates"
+        - "§eto recieve your rewards" # Should be receive, sorry :)
+      enchantments:
+        ARROW_INFINITE: 10
+
+```
+Will result into:
+
+![Example 1](https://ctrlv.sk/shots/2020/03/03/OOAE.png)
+
+#### Example 2
+Definition in the configuration file:
+```yml
+items:
+  TOOL: # TOOL is the unique item identifier
+    material: "GOLDEN_HOE"
+    name: "§e§lBeacon Setter"
+    amount: 1
+    damage: 0
+    unbreakable: true
+    lore:
+      - "§3§oUse this tool"
+      - "§3§oon a beacon to"
+      - "§3§ointeract with it!"
+    enchantments: # The enchantment is hidden by the item flag
+      ARROW_INFINITE: 10
+    item_flags:
+      - HIDE_ENCHANTS
+```
+Will result into:
+
+![Example 2](https://ctrlv.sk/shots/2020/03/03/l5Ku.png)
+
+#### Example 3
+Definition in the configuration file:
+```yml
+items:
+  slime_block: # slime_block is the unique item identifier
+    material: "SLIME_BLOCK"
+    amount: 12
+```
+Will result into:
+
+![Example 3](https://ctrlv.sk/shots/2020/03/03/sbS5.png)
+
+#### Example 4
+Definition in the configuration file:
+```yml
+items:
+  beacon_block: # beacon_block is the unique item identifier
+    material: "BEACON"  # Just a normal beacon :)
+```
+Will result into:
+
+![Example 4](https://ctrlv.sk/shots/2020/03/03/s4op.png)
 
 ### Video tutorial
-<iframe width="560" height="315" src="https://www.youtube.com/embed/K4JprGvXQMY" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div style={{position: "relative", paddingBottom: "56.25%", paddingTop: "25px", height: 0}}>
+<iframe style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}} src="https://www.youtube.com/embed/K4JprGvXQMY" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+## Recipes
+Recipes for **only the registered ItemStacks** can be defined in the recipe section of the configuration. This section is further divided into three parts that are in the form of subordinate keys:
+- ingredients
+- shaped_recipes
+- shapeless_recipes
+
+### Recipe example
+```yml
+recipes:
+  ingredients:  # All ingredients have to be defined here
+    G: GOLD_BLOCK
+    /: STICK
+    D: DIAMOND_BLOCK
+    L: ACACIA_LOG
+  shaped_recipes: # Shaped recipes for the registered item identifiers
+    TOOL:
+      row1: " DG" # The top row of the recipe
+      row2: " / " # The mid row of the recipe
+      row3: " / " # The bottom row of the recipe
+  shapeless_recipes:  # Shapeless recipes for the registered item identifiers
+    common_chest_item: "LLGD" # Needed ingredients for the item identifier
+```
+
+### Ingredients
+All materials used in the different recipes have to be registered as ingredients. All ingredient are in the form of (key: value) pairs where the key represents the **unique ingredient symbol** and the value represents the Bukkit material corresponding to the symbol. Full list of materials can be found [using this link.](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+```yml
+recipes:
+  ingredients:  # All ingredients have to be defined here
+    G: GOLD_BLOCK     # G will represent gold blocks
+    /: STICK          # / will represent sticks
+    D: DIAMOND_BLOCK  # D will represents diamond blocks
+    L: ACACIA_LOG     # L will represent acacia logs
+```
+
+### Shaped recipes
+Shaped recipes represent the crafting-table recipes where the shape of the items matter. Shaped recipes are defined in three rows (top to bottom) of three symbols where empty rows do not have to be specified. Only symbols registered in the ingredients part can be used. **The "space" symbol represents an empty cell of the crafting table.** Every shaped recipe corresponds to an item identifier representing a registered ItemStack.
+```yml
+recipes:
+  ingredients:
+    G: GOLD_BLOCK
+    /: STICK
+    D: DIAMOND_BLOCK
+  shaped_recipes:
+    TOOL: # Definition of a shaped recipe for the TOOL item
+      row1: " DG" # The top row will be an empty cell, a diamond block and a gold block
+      row2: " / " # The mid row will be two empty cells and a stick in the middle
+      row3: " / " # The bottom row will also be two empty cells and a stick in the middle
+```
+
+### Shapeless recipes
+Shapeless recipes represent the crafting-table recipes where the shape of the items **does not matter** matter. Shapeless recipes are defined as a string of 1 - 9 ingredient symbols. The "space" symbol cannot be used in a shapeless recipe. Every shapeless recipe also corresponds to an item identifier representing a registered ItemStack.
+```yml
+recipes:
+  ingredients:  # All ingredients have to be defined here
+    G: GOLD_BLOCK
+    D: DIAMOND_BLOCK
+    L: ACACIA_LOG
+  shapeless_recipes:
+    common_chest_item: "LLGD" # common_chest_item is the item identifier
+    # Its recipe will be one gold block, one diamond block and two acacia logs.
+```
+
+### Recipe examples
+These recipe examples represent recipes for the ItemStacks that were shown as item examples.
+
+#### Example 1
+Definition in the configuration file:
+```yml
+recipes:
+  ingredients:
+    G: GOLD_BLOCK
+    /: STICK
+    D: DIAMOND_BLOCK
+  shaped_recipes:
+    TOOL: # TOOL is the unique item identifier
+      row1: " DG"
+      row2: " / "
+      row3: " / "
+```
+Will result into:
+
+![Example 1](https://ctrlv.sk/shots/2020/03/03/TcpK.png)
+
+
+#### Example 2
+Definition in the configuration file:
+```yml
+recipes:
+  ingredients:
+    G: GOLD_BLOCK
+    D: DIAMOND_BLOCK
+  shaped_recipes:
+    beacon_block: # beacon_block is the unique item identifier
+      row2: "DGD"
+      row3: "GGG"
+```
+Will result into:
+
+![Example 2](https://ctrlv.sk/shots/2020/03/03/c0Yp.png)
+
+#### Example 3
+Definition in the configuration file:
+```yml
+recipes:
+  ingredients:
+    G: GOLD_BLOCK
+    /: STICK
+    D: DIAMOND_BLOCK
+    C: CLAY_BALL
+    L: ACACIA_LOG
+  shapeless_recipes:
+    common_chest_item: "LLGD" # common_chest_item is the unique item identifier
+    slime_block: "CCCCCC/" # slime_block is the unique item identifier
+```
+Will result into:
+
+![Example 3.1](https://ctrlv.sk/shots/2020/03/03/VoIr.png)
+
+and into:
+
+![Example 3.2](https://ctrlv.sk/shots/2020/03/03/JUmS.png)
+
+### Video tutorial
+<div style={{position: "relative", paddingBottom: "56.25%", paddingTop: "25px", height: 0}}>
+<iframe style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}} src="https://www.youtube.com/embed/KwZccToZUYE" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+## Inventories
+Recipes for **only the registered ItemStacks** can be defined in the recipe section of the configuration. This section is further divided into three parts that are in the form of subordinate keys:
+- ingredients
+- shaped_recipes
+- shapeless_recipes

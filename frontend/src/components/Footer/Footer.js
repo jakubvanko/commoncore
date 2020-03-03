@@ -49,7 +49,7 @@ const Footer = () => (
         <LinkContainer>
             <StyledLink href={"https://github.com/jakubvanko/commoncore"} target={"_blank"}
                         rel={"noopener noreferrer"}>GitHub</StyledLink>
-            <StyledLink to={"docs/doc1"}>Documentation</StyledLink>
+            <StyledLink to={'docs/01_getting_started'}>Documentation</StyledLink>
             <StyledLink>BetterBeacons</StyledLink>
             <StyledLink>UltraChest</StyledLink>
             <StyledLink>License</StyledLink>
