@@ -80,7 +80,7 @@ Default Command is a message that is used by every CommonCore plugin that uses c
 
 
 ## Items
-All items used in the given CommonCore plugin have to be specified in the item section of the configuration. Every item has its own unique item identifier that is used throught the rest of the configuration. The item identifier is the upper-most key and consists of a sequence of characters.
+All items used in the given CommonCore plugin have to be specified in the item section of the configuration. Every item has its own unique item identifier that is used throughout the rest of the configuration. The item identifier is the upper-most key and consists of a sequence of characters.
 
 Once the item identifier has been specified, you can optionally define other properties of the ItemStack. The property "material" is the only mandatory property. If you do not want to define a given property, simply do not write (or remove) it in your configuration.
 
@@ -479,3 +479,114 @@ and into:
 
 
 ## Inventories
+Similarly to items, all inventories used in the given CommonCore plugin have to be specified in the inventory section of the configuration.
+
+There is a number of different inventory types. However, the only inventory type currently supported by CommonCore are chest inventories. Therefore, all inventories have to be registered under the subordinate key "chest_inventories".
+
+Every inventory also has its own unique inventory identifier that is used throughout the rest of the configuration. The inventory identifier is the third upper-most key (right after the inventory type) and consists of a sequence of characters.
+
+#### Inventory example
+```yml
+inventories:
+  chest_inventories:
+    ultrachest_menu:  # ultrachest_menu is the inventory identifier
+      title: "Ultrachest Menu"
+      size: 36  # The inventory will have 36 cells
+      content:
+        0:  # The first cell will contain a beacon_block ItemStack
+          item: beacon_block  # beacon_block is an item identifier
+          actions:  
+            REPLACE_ITEM: # It will have a click action to replace item
+              ITEM: slime_block # slime_block is an item identifier of the new item
+            # Once this inventory cell is clicked,
+            # it will replace its content with a slime_block ItemStack
+```
+
+### Properties
+There is a number of supported inventory properties. All of these properties are mandatory.
+
+| Property | Value type |
+|----------|----------|
+|title|String with color formatting|
+|size|Number|
+|content|*See below for an explanation*|
+
+#### Title
+Specifies the title of the inventory that will be displayed in the upper-left corner of the inventory. It supports color formatting using the "paragraph" **§** symbol.
+
+#### Size
+Specifies the number of cells in the inventory.
+
+#### Content
+```yml
+content:
+  ITEM_SLOT_NUMBER: # The slots are numbered starting with 0!
+    item: ITEM_IDENTIFIER # Item identifier of the item that will be in this cell
+    actions:  # All click actions of the given inventory slot
+      CLICK_ACTION_NAME_1:  # Every action has its unique name
+        ACTION_ARGUMENT_NAME_11: ARGUMENT_DATA_11 # Every action may also have its arguments
+        ACTION_ARGUMENT_NAME_12: ARGUMENT_DATA_12
+      CLICK_ACTION_NAME_2:
+        ACTION_ARGUMENT_NAME_21: ARGUMENT_DATA_21
+
+```
+The content of the inventory and all inventory click actions are specified in this part as subordinate keys and values. The main key represents the slot number of the ItemStack (starting from 0). The actual item content of the inventory slot is specified in a subordinate (key: value) pair, where the key is "item" and the value is an item identifier of an item registered in the item section of the configuration.
+
+The inventory click actions manage the logic behind the inventory GUIs. Every CommonCore plugin has custom and unique inventory click actions built to serve its functionality. Most of the inventory click actions also have action arguments that need to be defined. Please, visit plugin-specific documents to learn about the inventory click actions supported by your plugin.
+
+All inventory click actions for the specified inventory slot are defined by their action name under the subordinate key "actions". Every action name also serves as a key and it may contain other (key: value) pairs representing the click action arguments. These click action argument (key: value) pairs specify the argument name for the given action as a key and the argument value as the value of the (key: value) pair.
+
+### Inventory examples
+These inventory examples represent inventories containing the ItemStacks that were shown as item examples. Please bear in mind that some of the inventory click actions used throughout these examples may not be supported by all CommonCore plugins.
+
+#### Example 1
+Definition in the configuration file:
+```yml
+inventories:
+  chest_inventories:
+    ultrachest_menu:  # ultrachest_menu is the unique inventory identifier
+      title: "§5§lUltraChest §7Menu"
+      size: 36
+      content:
+        0:
+          item: beacon_block  # beacon_block is an item identifier
+          actions:
+            REPLACE_ITEM:
+              ITEM: slime_block # slime_block is an item identifier
+        3:
+          item: slime_block # slime_block is an item identifier
+          actions:
+            PLAY_SOUND:
+              NAME: FIRE_IGNITE
+```
+Will result into:
+
+![Example 1](https://ctrlv.sk/shots/2020/03/04/fcqp.png)
+
+where clicking on the beacon block will replace the beacon block with 12 slime blocks and clicking on the slime blocks in the 4th inventory slot will play a sound called FIRE_IGNITE.
+
+#### Example 2
+Definition in the configuration file:
+```yml
+inventories:
+  chest_inventories:
+    main_menu:  # main_menu is the unique inventory identifier
+      title: "Better Beacons"
+      size: 45
+      content:
+        11:
+          item: beacon_block # beacon_block is an item identifier
+          actions:
+            OPEN_INVENTORY:
+              INVENTORY_NAME: ultrachest_menu
+```
+Will result into:
+
+![Example 2](https://ctrlv.sk/shots/2020/03/04/D0h1.png)
+
+where clicking on the beacon block will open the inventory specified in the example 1.
+
+### Video tutorial
+<div style={{position: "relative", paddingBottom: "56.25%", paddingTop: "25px", height: 0}}>
+<iframe style={{position: "absolute", top: "0", left: "0", width: "100%", height: "100%"}} src="https://www.youtube.com/embed/_8Fs3UMWVTE" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
