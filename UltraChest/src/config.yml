@@ -1,0 +1,241 @@
+#
+# UltraChest's Configuration File
+#
+# About this Plugin:
+# - Author: Jakub Vanko
+# - License: Public Domain
+# - GitHub Page: https://github.com/jakubvanko/minecraft-plugins
+# - Official Bukkit Page: https://dev.bukkit.org/projects/ultra-chest-interactive-reward
+# - Configuration Tutorial: https://dev.bukkit.org/projects/ultra-chest-interactive-reward/pages/config-settings
+#
+# Other Information:
+# - Restart/Reload needed after editing this file
+# - Please report any bugs on the official plugin sites
+# - This is the final version of the plugin and it will not be updated except for an occasional version update
+
+
+general:
+  choice_amount: 4
+  #If this is true, players will not have to place the ultrachest if it is a block, only right click.
+  #If it is false, players will have to place it on the ground. (This doesn't apply to non-block UC)
+  interact_to_open: false
+  chest_settings:
+    common_chest_item:
+      common_reward_tier: 75
+      rare_reward_tier: 20
+      epic_reward_tier: 4
+      legendary_reward_tier: 1
+    rare_chest_item:
+      common_reward_tier: 50
+      rare_reward_tier: 40
+      epic_reward_tier: 8
+      legendary_reward_tier: 2
+    epic_chest_item:
+      common_reward_tier: 40
+      rare_reward_tier: 30
+      epic_reward_tier: 25
+      legendary_reward_tier: 5
+    legendary_chest_item:
+      common_reward_tier: 15
+      rare_reward_tier: 30
+      epic_reward_tier: 45
+      legendary_reward_tier: 10
+  reward_settings:
+    common_reward_tier:
+      sword_reward_example:
+        chance: 1
+        min_amount: 1
+        max_amount: 1
+    rare_reward_tier:
+      sword_reward_example:
+        chance: 5
+        min_amount: 1
+        max_amount: 1
+    epic_reward_tier:
+      sword_reward_example:
+        chance: 10
+        min_amount: 1
+        max_amount: 1
+    legendary_reward_tier:
+      sword_reward_example:
+        chance: 15
+        min_amount: 1
+        max_amount: 2
+
+messages:
+  logo: '§3[§aUltra§6Chest§3]§3'
+  chest_not_found: "%logo §cSorry, chest named %chestname was not found!"
+  not_player: "%logo §cSorry, you have to be a player to do that!"
+  no_permission: "%logo §cSorry, you don't have permission to do that."
+  player_not_found: "%logo §cPlayer not found."
+  wrong_args: "%logo §cWrong command arguments! Type /ultrachest for help."
+  chest_given: "%logo §eGiven %chestamount chest(s) to %playername!"
+  chest_listing: "%logo §eAll chests: §f%allchests"
+  default_command: |
+    §3------------------%logo------------------
+    §e/ultrachest give <player> <chest, all, random> [amount] [args] §e- give specified chest to the given player
+    §e/ultrachest chests§e - writes all chest names
+    §e/ultrachest register§e - registers the item you are holding into the config
+  item_registered: |
+    %logo §eItem successfully registered, the identifier of the registered item is: §9%itemidentifier
+
+items:
+  before_click_icon:
+    name: "§f§l???"
+    material: CHEST
+    lore:
+      - "§7Choose 4 mystery chests and"
+      - "§7your loot will be revealed..."
+  after_click_icon:
+    name: '§f§l???'
+    material: GLASS_PANE
+    lore:
+      - "§7You have selected this mystery chest..."
+  common_reward_tier: &reward_template
+    name: "§fCommon §7Reward"
+    material: WHITE_STAINED_GLASS_PANE
+    lore:
+      - "§7§oClick to get your prize"
+  rare_reward_tier:
+    name: "§bRare §7Reward"
+    material: LIGHT_BLUE_STAINED_GLASS_PANE
+    lore:
+      - "§7§oClick to get your prize"
+  epic_reward_tier:
+    name: "§dEpic §7Reward"
+    material: PINK_STAINED_GLASS_PANE
+    lore:
+      - "§7§oClick to get your prize"
+  legendary_reward_tier:
+    name: "§6Legendary §7Reward"
+    material: YELLOW_STAINED_GLASS_PANE
+    lore:
+      - "§7§oClick to get your prize"
+  common_chest_item: &chest_template
+    name: "§fCommon §7Ultra Chest"
+    material: CHEST
+    lore:
+      - "§ePlace this on the ground"
+      - "§eand choose from mystery crates"
+      - "§eto recieve your rewards"
+    enchantments:
+      ARROW_INFINITE: 10
+  rare_chest_item:
+    <<: *chest_template
+    name: "§bRare §7Ultra Chest"
+  epic_chest_item:
+    <<: *chest_template
+    name: "§dEpic §7Ultra Chest"
+  legendary_chest_item:
+    <<: *chest_template
+    name: "§6Legendary §7Ultra Chest"
+  sword_reward_example:
+    name: "§5Sword of the Example"
+    material: DIAMOND_SWORD
+    damage: 0
+    unbreakable: false
+    lore:
+    - '§aThe sword of the example'
+    enchantments:
+      DAMAGE_ALL: 3
+      ARROW_DAMAGE: 1
+    item_flags:
+      - HIDE_ENCHANTS
+    item_attributes:
+      GENERIC_ATTACK_DAMAGE:
+        HAND:
+          ADD_NUMBER: 0.5
+          ADD_SCALAR: 0.7
+          MULTIPLY_SCALAR_1: 0.8
+
+recipes:
+  # You can use this if you want to make your chests craftable
+
+inventories:
+  chest_inventories:
+    ultrachest_menu:
+      title: "UltraChest Menu"
+      size: 36
+      content:
+        0: &content_template
+          item: before_click_icon
+          actions:
+            REPLACE_ITEM:
+              ITEM: after_click_icon
+            PLAY_SOUND:
+              NAME: BLOCK_NOTE_BLOCK_HARP
+              VOLUME: 1
+              PITCH: 1
+            ULTRACHEST_START:
+              REVEALING_DELAY: 2
+              #REVEALING_SOUND: BLOCK_NOTE_BLOCK_HARP
+        1:
+          <<: *content_template
+        2:
+          <<: *content_template
+        3:
+          <<: *content_template
+        4:
+          <<: *content_template
+        5:
+          <<: *content_template
+        6:
+          <<: *content_template
+        7:
+          <<: *content_template
+        8:
+          <<: *content_template
+        9:
+          <<: *content_template
+        10:
+          <<: *content_template
+        11:
+          <<: *content_template
+        12:
+          <<: *content_template
+        13:
+          <<: *content_template
+        14:
+          <<: *content_template
+        15:
+          <<: *content_template
+        16:
+          <<: *content_template
+        17:
+          <<: *content_template
+        18:
+          <<: *content_template
+        19:
+          <<: *content_template
+        20:
+          <<: *content_template
+        21:
+          <<: *content_template
+        22:
+          <<: *content_template
+        23:
+          <<: *content_template
+        24:
+          <<: *content_template
+        25:
+          <<: *content_template
+        26:
+          <<: *content_template
+        27:
+          <<: *content_template
+        28:
+          <<: *content_template
+        29:
+          <<: *content_template
+        30:
+          <<: *content_template
+        31:
+          <<: *content_template
+        32:
+          <<: *content_template
+        33:
+          <<: *content_template
+        34:
+          <<: *content_template
+        35:
+          <<: *content_template

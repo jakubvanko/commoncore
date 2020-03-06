@@ -1,0 +1,479 @@
+#
+# BetterBeacons's Configuration File
+#
+# About this Plugin:
+# - Author: Jakub Vanko
+# - License: Public Domain
+# - GitHub Page: https://github.com/jakubvanko/minecraft-plugins
+# - Official Bukkit Page: https://dev.bukkit.org/projects/better-beacons
+# - Configuration Tutorial: https://dev.bukkit.org/projects/better-beacons/pages/config-settings
+#
+# Other Information:
+# - This plugin works for Minecraft version 1.10.2 and up
+# - Restart/Reload is needed after editing this file
+# - Please report any bugs on the official plugin sites
+# - This is the final version of the plugin and it will not be updated except for an occasional version update
+
+
+general:
+  tool:
+    needed: true
+  # "normal_beacon_interaction" decides whether or not players can use the beacon the normal way
+  # Be careful with this, because if this is "true" and "tool_needed" is "false" the plugin will probably not work and will be buggy
+  normal_beacon_interaction: false
+  effect_duration:
+    enabled: false
+    duration: 86400
+    subtraction_time: 60
+
+messages:
+  logo: '§3[§aBetter§6Beacons§3]§f' # its abbreviation is "%logo"
+  secondary_set_low_tier: "%logo §cSecondary Effect was set but it will activate once the beacon tier is 4."
+  secondary_set_no_primary: "%logo §cSecondary Effect was set but it will activate once the primary effect is set."
+  low_tier: "%logo §cYour beacon tier is too low! Needed tier is %nt, and your tier is only %bt."
+  no_permission: "%logo §cSorry, you don't have permission to do that."
+  player_not_found: "%logo §cPlayer not found."
+  not_enough_items: "%logo §cSorry, you don't have all the needed items."
+  not_enough_money: "%logo §cSorry, you don't have enough money."
+  wrong_args: "%logo §cWrong command arguments! Type /betterbeacons for help."
+  default_command: |
+    §3------------------%logo------------------
+    §e/betterbeacons tool§e - Gives you the tool needed to setup beacons
+  beacon_info: |
+    %logo
+    §3Beacon is located at  §aX: %x,  §bY: %y,  §eZ: %z
+    §3Tier:  §e%bt
+    §3Primary effect:  §e%pe
+    §3Secondary effect:  §e%se
+  # If you want, you can use these abbreviations. (It is suggested, if you have effect_duration enabled, [just delete this line + #])
+    #§3Time until primary effect deactivates: §e%pd seconds
+    #§3Time until secondary effect deactivates: §e%sd seconds
+
+items:
+  TOOL:
+    name: "§6§lBeacon Setter"
+    material: "GOLDEN_HOE"
+    amount: 1
+    damage: 0
+    unbreakable: true
+    lore:
+      - "§3§oUse this tool"
+      - "§3§oon a beacon to"
+      - "§3§ointeract with it!"
+    enchantments:
+      ARROW_INFINITE: 10
+    item_flags:
+      - HIDE_ENCHANTS
+  beacon_icon:
+    name: "§3§lSetup This Beacon"
+    material: "BEACON"
+    lore:
+      - ""
+      - "§b§oSet the primary"
+      - "§b§oand the secondary"
+      - "§b§oeffect of this beacon!"
+  gold_block_icon:
+    name: "§6§lSet Primary Effect"
+    material: "GOLD_BLOCK"
+    lore:
+      - ""
+      - "§e§oSet the primary"
+      - "§e§oeffect of this beacon!"
+  emerald_block_icon:
+    name: "§2§lSet Secondary Effect"
+    material: "EMERALD_BLOCK"
+    lore:
+      - ""
+      - "§a§oSet the secondary"
+      - "§a§oeffect of this beacon!"
+  writable_book_icon:
+    name: "§5§lRemove All Effects"
+    material: "WRITABLE_BOOK"
+    lore:
+      - ""
+      - "§d§oRemove all effects"
+      - "§d§ofrom this beacon!"
+  paper_icon:
+    name: "§7§lBeacon Information"
+    material: "PAPER"
+    lore:
+      - ""
+      - "§8§oGet more information"
+      - "§8§oabout this beacon!"
+  barrier_icon:
+    name: "§4§lClose This Menu"
+    material: "BARRIER"
+    lore:
+      - ""
+      - "§c§oClose this menu!"
+  slime_block_icon:
+    name: "§2§lJump Boost"
+    material: "SLIME_BLOCK"
+    lore: &default_lore
+      - ""
+      - "§9Beacon tier needed: %nt"
+      - ""
+      - "§6Price:"
+      - "%price"
+  sugar_icon:
+    name: "§2§lSpeed"
+    material: "SUGAR"
+    lore: *default_lore
+  golden_pickaxe_icon:
+    name: "§2§lHaste"
+    material: "GOLDEN_PICKAXE"
+    lore: *default_lore
+  iron_sword_icon:
+    name: "§2§lStrength"
+    material: "IRON_SWORD"
+    lore: *default_lore
+  ghast_tear_icon:
+    name: "§2§lRegeneration"
+    material: "GHAST_TEAR"
+    lore: *default_lore
+  iron_chestplate_icon:
+    name: "§2§lResistance"
+    material: "IRON_CHESTPLATE"
+    lore: *default_lore
+  lava_bucket_icon:
+    name: "§2§lFire Resistance"
+    material: "LAVA_BUCKET"
+    lore: *default_lore
+  water_bucket_icon:
+    name: "§2§lWater Breathing"
+    material: "WATER_BUCKET"
+    lore: *default_lore
+  glass_icon:
+    name: "§2§lInvisibility"
+    material: "GLASS"
+    lore: *default_lore
+  golden_carrot_icon:
+    name: "§2§lNight Vision"
+    material: "GOLDEN_CARROT"
+    lore: *default_lore
+  cooked_porkchop_icon:
+    name: "§2§lSaturation"
+    material: "COOKED_PORKCHOP"
+    lore: *default_lore
+  golden_apple_icon:
+    name: "§2§lHealth Boost"
+    material: "GOLDEN_APPLE"
+    lore: *default_lore
+  obsidian_icon:
+    name: "§2§lAbsorption"
+    material: "OBSIDIAN"
+    lore: *default_lore
+  glistering_melon_slice_icon:
+    name: "§2§lInstant Health"
+    material: "GLISTERING_MELON_SLICE"
+    lore: *default_lore
+  diamond_icon:
+    name: "§2§lLuck"
+    material: "DIAMOND"
+    lore: *default_lore
+  hearth_of_the_sea_icon:
+    name: "§2§lConduit Power"
+    material: "HEART_OF_THE_SEA"
+    lore: *default_lore
+  salmon_icon:
+    name: "§2§lDolphin's Grace"
+    material: "SALMON"
+    lore: *default_lore
+  feather_icon:
+    name: "§2§lSlow Falling"
+    material: "FEATHER"
+    lore: *default_lore
+  spectral_arrow_icon:
+    name: "§c§lGlowing"
+    material: "SPECTRAL_ARROW"
+    lore: *default_lore
+  elytra_icon:
+    name: "§c§lLevitation"
+    material: "ELYTRA"
+    lore: *default_lore
+  soul_sand_icon:
+    name: "§c§lSlowness"
+    material: "SOUL_SAND"
+    lore: *default_lore
+  wooden_pickaxe_icon:
+    name: "§c§lMining Fatigue"
+    material: "WOODEN_PICKAXE"
+    lore: *default_lore
+  red_mushroom_icon:
+    name: "§c§lNausea"
+    material: "RED_MUSHROOM"
+    lore: *default_lore
+  jack_o_lantern_icon:
+    name: "§c§lBlindness"
+    material: "JACK_O_LANTERN"
+    lore: *default_lore
+  rotten_flesh_icon:
+    name: "§c§lHunger"
+    material: "ROTTEN_FLESH"
+    lore: *default_lore
+  wooden_sword_icon:
+    name: "§c§lWeakness"
+    material: "WOODEN_SWORD"
+    lore: *default_lore
+  fermented_spider_eye_icon:
+    name: "§c§lPoison"
+    material: "FERMENTED_SPIDER_EYE"
+    lore: *default_lore
+  wither_skeleton_skull_icon:
+    name: "§c§lWither"
+    material: "BONE"
+    lore: *default_lore
+  redstone_block_icon:
+    name: "§c§lInstant Damage"
+    material: "REDSTONE_BLOCK"
+    lore: *default_lore
+  coal_icon:
+    name: "§c§lBad Luck"
+    material: "COAL"
+    lore: *default_lore
+  diamond_price:
+    name: "    §b2 Diamond"
+    material: "DIAMOND"
+    amount: 2
+
+recipes:
+  ingredients:
+    G: "GOLD_BLOCK"
+    /: "STICK"
+    D: "DIAMOND_BLOCK"
+  shaped_recipes:
+    TOOL:
+      row_1: " DG"
+      row_2: " / "
+      row_3: " / "
+
+inventories:
+  chest_inventories:
+    main_menu:
+      title: "Better Beacons"
+      size: 45
+      content:
+        11:
+          item: beacon_icon
+          actions:
+            OPEN_INVENTORY:
+              INVENTORY_NAME: "setup_menu"
+        13:
+          item: gold_block_icon
+          actions:
+            OPEN_INVENTORY:
+              INVENTORY_NAME: "primary_menu"
+        15:
+          item: emerald_block_icon
+          actions:
+            OPEN_INVENTORY:
+              INVENTORY_NAME: "secondary_menu"
+        29:
+          item: writable_book_icon
+          actions:
+            REMOVE_BEACON_EFFECT:
+              PRIMARY: true
+              SECONDARY: true
+        31:
+          item: paper_icon
+          actions:
+            BEACON_INFO:
+              MESSAGE: "beacon_info"
+        33:
+          item: barrier_icon
+          actions:
+            CLOSE_INVENTORY:
+              INVENTORY_NAME: "main_menu"
+    primary_menu: &effects_menu
+      title: "Choose Primary Effect"
+      size: 45
+      content:
+        0:
+          item: slime_block_icon
+          actions:
+            SET_EFFECT: &effects_effect
+              EFFECT: "JUMP"
+              TIER: 1
+              ITEM_PRICE:
+                - diamond_price
+              MONEY_PRICE: 0
+              MONEY_PRICE_MESSAGE: "    §b0 $$$"
+        1:
+          item: sugar_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "SPEED"
+        2:
+          item: golden_pickaxe_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "FAST_DIGGING"
+        3:
+          item: iron_sword_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "INCREASE_DAMAGE"
+        4:
+          item: ghast_tear_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "REGENERATION"
+        5:
+          item: iron_chestplate_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "DAMAGE_RESISTANCE"
+        6:
+          item: lava_bucket_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "FIRE_RESISTANCE"
+        7:
+          item: water_bucket_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "WATER_BREATHING"
+        8:
+          item: glass_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "INVISIBILITY"
+        9:
+          item: golden_carrot_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "NIGHT_VISION"
+        10:
+          item: cooked_porkchop_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "SATURATION"
+        11:
+          item: golden_apple_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "HEALTH_BOOST"
+        12:
+          item: obsidian_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "ABSORPTION"
+        13:
+          item: glistering_melon_slice_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "HEAL"
+        14:
+          item: diamond_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "LUCK"
+        15:
+          item: hearth_of_the_sea_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "CONDUIT_POWER"
+        16:
+          item: salmon_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "DOLPHINS_GRACE"
+        17:
+          item: feather_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "SLOW_FALLING"
+        27:
+          item: spectral_arrow_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "GLOWING"
+        28:
+          item: elytra_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "LEVITATION"
+        29:
+          item: soul_sand_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "SLOW"
+        30:
+          item: wooden_pickaxe_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "SLOW_DIGGING"
+        31:
+          item: red_mushroom_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "CONFUSION"
+        32:
+          item: jack_o_lantern_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "BLINDNESS"
+        33:
+          item: rotten_flesh_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "HUNGER"
+        34:
+          item: wooden_sword_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "WEAKNESS"
+        35:
+          item: fermented_spider_eye_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "POISON"
+        36:
+          item: wither_skeleton_skull_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "WITHER"
+        37:
+          item: redstone_block_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "HARM"
+        38:
+          item: coal_icon
+          actions:
+            SET_EFFECT:
+              <<: *effects_effect
+              EFFECT: "UNLUCK"
+    setup_menu:
+      <<: *effects_menu
+    secondary_menu:
+      title: "Choose Secondary Effect"
+      <<: *effects_menu
