@@ -7,8 +7,8 @@
 
 module.exports = {
   someSidebar: {
-    CommonCore: ['01_getting_started', '02_yaml', '03_configuration'],
-    BetterBeacons: [],
-    UltraChest: []
+    'CommonCore': ['01_getting_started', '02_yaml', '03_configuration'],
+    'Plugins': ['04_betterbeacons', '05_ultrachest'],
+    'API Reference': []
   },
 };

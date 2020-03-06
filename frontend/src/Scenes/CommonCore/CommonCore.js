@@ -121,10 +121,10 @@ const CommonCore = () => {
                             <Arrow width={12}/>
                         </SubLink>
                     </LinkContainer>
-                    <Button $additional>
+                    <Button to={'docs/04_betterbeacons'} $additional>
                         BettterBeacons
                     </Button>
-                    <Button $additional>
+                    <Button to={'docs/05_ultrachest'} $additional>
                         UltraChest
                     </Button>
                 </ButtonContainer>

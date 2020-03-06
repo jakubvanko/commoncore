@@ -69,7 +69,8 @@ export const Button = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    text-decoration: none !important;
+        
     svg {
         margin-right: 0.8rem;
     }
