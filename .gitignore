@@ -31,3 +31,4 @@ yarn-error.log*
 # Java
 out
 /__external
+/javadoc
