@@ -52,7 +52,8 @@ const Footer = () => (
             <StyledLink to={"docs/01_getting_started"}>Documentation</StyledLink>
             <StyledLink to={"docs/04_betterbeacons"}>BetterBeacons</StyledLink>
             <StyledLink to={"docs/05_ultrachest"}>UltraChest</StyledLink>
-            <StyledLink to={"https://github.com/jakubvanko/commoncore/blob/master/LICENSE"}>License</StyledLink>
+            <StyledLink to={"https://github.com/jakubvanko/commoncore/blob/master/LICENSE"} target={"_blank"}
+                        rel={"noopener noreferrer"}>License</StyledLink>
         </LinkContainer>
         <Copyright>
             <div>This work is dedicated to the public domain. Rights for parts of the web design go to their respective
