@@ -17,6 +17,7 @@
     "react-dom": "^16.13.0",
     "react-spinners": "^0.8.0",
     "react-typist": "^2.0.5",
+    "react-visibility-sensor": "^5.1.1",
     "styled-components": "^5.0.1"
   },
   "browserslist": {

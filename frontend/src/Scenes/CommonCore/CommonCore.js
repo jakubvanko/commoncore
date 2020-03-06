@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import CountUp from 'react-countup';
@@ -35,6 +35,7 @@ import Icon from "../../components/Icon/Icon";
 import Review from "../../components/Review/Review";
 import BackgroundShape from "../../components/BackgroundShape/BackgroundShape";
 import Footer from "../../components/Footer/Footer";
+import VisibilitySensor from "react-visibility-sensor";
 
 const MAIN_FEATURES = [{
     title: "Material Convertor",
@@ -94,6 +95,7 @@ const ADVANCED_FEATURES = [{
 const CommonCore = () => {
     const context = useDocusaurusContext();
     const {siteConfig = {}} = context;
+    const [areStatsVisible, setStatsVisible] = useState(false);
     return (
         <Layout
             title={`The most flexible Minecraft plugins`}
@@ -163,38 +165,48 @@ const CommonCore = () => {
                     <div>You do not have to be a programmer to fully customize CommonCore plugins.</div>
                     <div>The configuration is simple and straightforward.</div>
                 </SubHeading>
-                <StatsContainer>
-                    <StatsPart>
-                        <SectionHeading $color={"#2196F3"}>
-                            <CountUp
-                                start={0}
-                                duration={3}
-                                easingFn={function (t, b, c, d) {
-                                    return c*((t=t/d-1)*t*t*t*t + 1) + b;
-                                }}
-                                end={10000}
-                                suffix="+"/>
-                        </SectionHeading>
-                        <StatsDescription>
-                            CommonCore plugin downloads
-                        </StatsDescription>
-                    </StatsPart>
-                    <StatsPart>
-                        <SectionHeading $color={"#2196F3"}>
-                            <CountUp
-                                start={0}
-                                duration={3.9}
-                                easingFn={function (t, b, c, d) {
-                                    return c*((t=t/d-1)*t*t*t*t + 1) + b;
-                                }}
-                                end={100}
-                                suffix="+"/>
-                        </SectionHeading>
-                        <StatsDescription>
-                            Servers currently running CC plugins
-                        </StatsDescription>
-                    </StatsPart>
-                </StatsContainer>
+                <VisibilitySensor onChange={isVisible => {
+                    if (isVisible && !areStatsVisible) {
+                        setStatsVisible(true)
+                    }
+                }}>
+                    <StatsContainer>
+                        <StatsPart>
+                            <SectionHeading $color={"#2196F3"}>
+                                {areStatsVisible ?
+                                <CountUp
+                                    start={1000}
+                                    duration={2}
+                                    easingFn={function (t, b, c, d) {
+                                        return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+                                    }}
+                                    end={10000}
+                                    suffix="+"/> : <span>1000</span>
+                                }
+                            </SectionHeading>
+                            <StatsDescription>
+                                CommonCore plugin downloads
+                            </StatsDescription>
+                        </StatsPart>
+                        <StatsPart>
+                            <SectionHeading $color={"#2196F3"}>
+                                {areStatsVisible ?
+                                <CountUp
+                                    start={1}
+                                    duration={2.6}
+                                    easingFn={function (t, b, c, d) {
+                                        return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+                                    }}
+                                    end={100}
+                                    suffix="+"/> : <span>1</span>
+                                }
+                            </SectionHeading>
+                            <StatsDescription>
+                                Servers currently running CC plugins
+                            </StatsDescription>
+                        </StatsPart>
+                    </StatsContainer>
+                </VisibilitySensor>
                 <ReviewContainer>
                     {REVIEWS.map(({author, text}) => (
                         <Review author={author} text={text}/>
