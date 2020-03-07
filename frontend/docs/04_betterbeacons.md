@@ -16,9 +16,10 @@ Normal beacons can only transmit a few of the vast amount of potion effects in M
 - Economy support - [Vault](https://dev.bukkit.org/projects/vault) needed
 - Special permissions
 - Complete configurability
+- Support for [Custom Items and Textures](https://dev.bukkit.org/projects/custom-items-and-textures)
 
 ## Commands
-The default command is "/betterbeacons". Its aliases are "/bb" and "/betterbeacon". Once used, it will tell the player how to use the commands of Better Beacons plugin.
+The default command is "/betterbeacons". Its aliases are "/bb" and "/betterbeacon". Once used, it will tell the player how to use the commands of the Better Beacons plugin.
 
 ### /betterbeacons tool
 This command gives you the tool needed to use beacons. The tool will work properly only if the configuration disallows using beacons without the tool. You can also specify a player name as an argument (For example "/bb tool LolokarSK"), which will give the tool to the specified player.
@@ -88,7 +89,7 @@ Text sent to the player when they try to do something that they don't have permi
 #### Player not found
 Config path: <span style={{color: "darkgreen"}}>**messages:player_not_found**</span>
 
-Text that sent to the player when they try to target a player that is currently offline (using the /betterbeacons tool command).
+Text that sent to the player when they try to target a player that is currently offline (using the "/betterbeacons tool" command).
 
 #### Not enough items
 Config path: <span style={{color: "darkgreen"}}>**messages:not_enough_items**</span>
@@ -103,12 +104,12 @@ Text sent to the player when they try to set a beacon effect that costs more mon
 #### Wrong arguments
 Config path: <span style={{color: "darkgreen"}}>**messages:wrong_args**</span>
 
-Text that sent to the player when they try to use the /betterbeacons command with invalid arguments.
+Text that sent to the player when they try to use the "/betterbeacons" command with invalid arguments.
 
 #### Default command
 Config path: <span style={{color: "darkgreen"}}>**messages:default_command**</span>
 
-Text sent to the player when they use the /betterbeacons command without any arguments. The variable type for this message is a **multi-line string**.
+Text sent to the player when they use the "/betterbeacons" command without any arguments. The variable type for this message is a **multi-line string**.
 
 #### Beacon information
 Config path: <span style={{color: "darkgreen"}}>**messages:beacon_info**</span>
