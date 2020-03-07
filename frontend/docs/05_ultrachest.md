@@ -192,11 +192,76 @@ Text that sent to the player when they successfully use the "/ultrachest registe
 Item settings are closely documented in the CommonCore tutorial. All registered items can be used as UltraChests, reward tier icons or rewards. If an item is used as a reward, the amount does not have to be specified as it is specified in the reward tier settings.
 
 ### Inventories
+Inventory settings are closely documented in the CommonCore tutorial. This configuration section takes advantage of advanced YAML concepts. Please, make sure to also learn about node anchors and node references before proceeding further.
+
+This plugin makes use of the inventory "**ultrachest_menu**" that you can modify as any other CommonCore inventory. This inventory is displayed to the player when they interact with an UltraChest item.
 
 ### Inventory click actions
+This plugin supports the following inventory click actions that you can specify in the inventory section of the configuration to modify the logic of the plugin inventory GUIs. Editing the argument values of the click actions is usually everything that server administrators have to do to customize the behaviour of their UltraChests. Invalid changes, additions or removals of the inventory click actions may break the plugin and you should do so only if you know what you are doing.
+
+#### REPLACE_ITEM
+Replaces the item at the given slot with another item. This action is used on all items in UltraChest to replace them with another item after the player has chosen the given slot.
+
+|Argument name|Argument values|
+|--------|------|
+|ITEM|Item identifier of a registered item|
+
+#### PLAY_SOUND
+Plays the specified sound to the player. This action is used on all items in UltraChest to play a sound after the player has chosen the given slot.
+
+|Argument name|Argument values|
+|--------|------|
+|NAME|[Bukkit sound name](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)|
+|VOLUME|Number (representing the volume of the sound)|
+|PITCH|Number (representing the pitch of the sound)|
+
+Full list of sound names can be found [using this link.](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
+
+#### ULTRACHEST_START
+The most important action of this plugin. This action specifies that the item in the inventory slot should serve as an UltraChest interaction item. Triggering this action removes all other actions and therefore it **must be specified as the last action** of the given item.
+
+|Argument name|Argument values|
+|--------|------|
+|REVEALING_DELAY|Number (representing the amount of ticks that the server should wait between revealing the different reward tiers)|
+|REVEALING_SOUND|[Bukkit sound name](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html) (representing the sound played to the player when they reveal a reward)|
+
+Full list of sound names can be found [using this link.](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
 
 ## Commands
 The default command is "/ultrachest". Its aliases are "/uc" and "/ultrachests". Once used, it will tell the player how to use the commands of the UltraChests plugin.
+
+### /ultrachest chests
+This command tells you the item identifiers of all registered UltraChests. You can than use these chest identifiers in the "/ultrachest give" command.
+
+### /ultrachest register
+This command registers the item that you are currently holding (in your main hand) into the item section of the configuration. It will also tell you its item identifier that you can use to find and modify it.
+
+### /ultrachest give
+This command is used to give a specified amount of specified UltraChests to the specified player. There are three variants of this command.
+
+#### /ultrachest give &lt;PLAYER_NAME&gt; all &lt;AMOUNT&gt;
+Gives the specified player the specified amount of all UltraChests. For example, if the amount is 5 and there are 4 different UltraChests, the player will get 4*5=20 UltraChests.
+
+#### /ultrachest give &lt;PLAYER_NAME&gt; &lt;CHEST_IDENTIFIER&gt; &lt;AMOUNT&gt;
+Gives the specified player the specified amount of the specified UltraChest type. You can list all chest identifiers using the "/ultrachest chests" command.
+
+#### /ultrachest give &lt;PLAYER_NAME&gt; random &lt;AMOUNT&gt; &lt;ARGUMENTS&gt;
+Gives the specified player the specified amount of randomly selected UltraChests depending on the specified arguments. The arguments have to be written as one undivided string in the following format:
+
+<div style={{color: "darkgreen", fontWeight: "bold"}}>&lt;CHEST_IDENTIFIER&gt;-&lt;NUMBER&gt;,&lt;CHEST_IDENTIFIER&gt;-&lt;NUMBER&gt;,....</div><br/>
+
+where the CHEST_IDENTIFIER specifies the UltraChest type and the number next to it specifies the chance of generating this UltraChest type. UltraChests with a larger number have a higher chance of being generated. The chances of all UltraChests are summed and normalized to calculate the percentage. You can list all chest identifiers using the "/ultrachest chests" command.
+
+##### Command usage example
+Lets say that we have 4 specified UltraChests:
+- common_chest_item
+- rare_chest_item
+- epic_chest_item
+- legendary_chest_item
+
+and I want to randomly generate 10 UltraChests but only between the common_chest_item and rare_chest_item. I also want to have 5 times the chance of picking the common_chest_item than of picking the rare_chest_item. The command to do this would look like this:
+
+**/ultrachest give &lt;PLAYER_NAME&gt; random 10** <span style={{color: "darkgreen", fontWeight: "bold"}}>common_chest_item-5,rare_chest_item-1</span>
 
 ### Video tutorial
 <div style={{position: "relative", paddingBottom: "56.25%", paddingTop: "25px", height: 0}}>
