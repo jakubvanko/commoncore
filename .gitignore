@@ -23,12 +23,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # IntelliJ
-*/.idea
+*.idea
 *.iml
 *.ipr
 *.iws
 
 # Java
 out
-/__external
+*/__external
 /javadoc
