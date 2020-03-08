@@ -163,17 +163,18 @@ const CommonCore = () => {
                 </SectionHeadingContainer>
                 <SubHeading>
                     <div>You do not have to be a programmer to fully customize CommonCore plugins.</div>
-                    <div>The configuration is simple and straightforward.</div>
+                    <VisibilitySensor onChange={isVisible => {
+                        if (isVisible && !areStatsVisible) {
+                            setStatsVisible(true)
+                        }
+                    }}>
+                        <div>The configuration is simple and straightforward.</div>
+                    </VisibilitySensor>
                 </SubHeading>
-                <VisibilitySensor onChange={isVisible => {
-                    if (isVisible && !areStatsVisible) {
-                        setStatsVisible(true)
-                    }
-                }}>
-                    <StatsContainer>
-                        <StatsPart>
-                            <SectionHeading $color={"#2196F3"}>
-                                {areStatsVisible ?
+                <StatsContainer>
+                    <StatsPart>
+                        <SectionHeading $color={"#2196F3"}>
+                            {areStatsVisible ?
                                 <CountUp
                                     start={1000}
                                     duration={2}
@@ -182,15 +183,15 @@ const CommonCore = () => {
                                     }}
                                     end={10000}
                                     suffix="+"/> : <span>1000</span>
-                                }
-                            </SectionHeading>
-                            <StatsDescription>
-                                CommonCore plugin downloads
-                            </StatsDescription>
-                        </StatsPart>
-                        <StatsPart>
-                            <SectionHeading $color={"#2196F3"}>
-                                {areStatsVisible ?
+                            }
+                        </SectionHeading>
+                        <StatsDescription>
+                            CommonCore plugin downloads
+                        </StatsDescription>
+                    </StatsPart>
+                    <StatsPart>
+                        <SectionHeading $color={"#2196F3"}>
+                            {areStatsVisible ?
                                 <CountUp
                                     start={1}
                                     duration={2.6}
@@ -199,14 +200,13 @@ const CommonCore = () => {
                                     }}
                                     end={100}
                                     suffix="+"/> : <span>1</span>
-                                }
-                            </SectionHeading>
-                            <StatsDescription>
-                                Servers currently running CC plugins
-                            </StatsDescription>
-                        </StatsPart>
-                    </StatsContainer>
-                </VisibilitySensor>
+                            }
+                        </SectionHeading>
+                        <StatsDescription>
+                            Servers currently running CC plugins
+                        </StatsDescription>
+                    </StatsPart>
+                </StatsContainer>
                 <ReviewContainer>
                     {REVIEWS.map(({author, text}) => (
                         <Review author={author} text={text}/>

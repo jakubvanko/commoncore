@@ -5,8 +5,7 @@ const Container = styled.svg`
     position: absolute;
     bottom: -1px;
     left: -5px;
-    max-width: 100%;
-    padding-top: 100vh;
+    padding-top: 110vh;
 `;
 
 const BackgroundShape = () => (
