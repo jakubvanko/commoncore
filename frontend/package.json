@@ -6,7 +6,7 @@
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus build && scp -r ./build/* root@104.248.18.245:/var/www/commoncore.jakubvanko.com/html"
+    "deploy": "docusaurus build && ssh root@104.248.18.245 rm -r /var/www/commoncore.jakubvanko.com/html/* &&scp -r ./build/* root@104.248.18.245:/var/www/commoncore.jakubvanko.com/html"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.43",
