@@ -1,7 +1,6 @@
 package sk.jakubvanko.commoncore.actions;
 
-import org.bukkit.inventory.ItemStack;
-import sk.jakubvanko.commoncore.CCMaterial;
+import com.cryptomorin.xseries.XMaterial;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.commoncore.EventArguments;
 
@@ -27,6 +26,6 @@ public class RemoveItem extends ClickAction<EventArguments> {
      */
     @Override
     public void onSlotClicked(EventArguments eventArguments) {
-        eventArguments.getEvent().setCurrentItem(new ItemStack(CCMaterial.AIR.parseMaterial()));
+        eventArguments.getEvent().setCurrentItem(XMaterial.AIR.parseItem());
     }
 }

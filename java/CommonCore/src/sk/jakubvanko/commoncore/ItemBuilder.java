@@ -1,5 +1,6 @@
 package sk.jakubvanko.commoncore;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public class ItemBuilder {
 
-    protected CCMaterial ccMaterial;
+    protected XMaterial xMaterial;
     protected String name;
     protected int amount = 1;
     protected int damage = 0;
@@ -29,20 +30,20 @@ public class ItemBuilder {
     /**
      * Creates a new itemstack builder with a given ccMaterial
      *
-     * @param ccMaterial CCMaterial of the itemstack
+     * @param xMaterial XMaterial of the itemstack
      */
-    public ItemBuilder(CCMaterial ccMaterial) {
-        this.ccMaterial = ccMaterial;
+    public ItemBuilder(XMaterial xMaterial) {
+        this.xMaterial = xMaterial;
     }
 
     /**
      * Sets the ccMaterial of the itemstack that will be built
      *
-     * @param ccMaterial CCMaterial to set the builder to
+     * @param xMaterial XMaterial to set the builder to
      * @return Itself to chain commands
      */
-    public ItemBuilder setMaterial(CCMaterial ccMaterial) {
-        this.ccMaterial = ccMaterial;
+    public ItemBuilder setMaterial(XMaterial xMaterial) {
+        this.xMaterial = xMaterial;
         return this;
     }
 
@@ -140,7 +141,8 @@ public class ItemBuilder {
      * @return Itemstack with given parameters
      */
     public ItemStack build() {
-        ItemStack itemStack = ccMaterial.createItem(amount);
+        ItemStack itemStack = xMaterial.parseItem(true);
+        itemStack.setAmount(amount);
         if (enchantments != null) {
             itemStack.addUnsafeEnchantments(enchantments);
         }
@@ -158,7 +160,7 @@ public class ItemBuilder {
         }
         itemStack.setItemMeta(itemMeta);
         // This assures compatibility with older versions
-        if (CCMaterial.isNewVersion()) {
+        if (XMaterial.isNewVersion()) {
             itemMeta.setUnbreakable(unbreakable);
             Damageable damageable = (Damageable) itemMeta;
             damageable.setDamage(damage);

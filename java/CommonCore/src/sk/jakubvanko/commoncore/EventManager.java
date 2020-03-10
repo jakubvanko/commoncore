@@ -1,5 +1,6 @@
 package sk.jakubvanko.commoncore;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,7 +33,7 @@ public abstract class EventManager implements Listener {
         if (clickedInventory == null) return;
         ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem == null) return;
-        if (CCMaterial.AIR.isSameMaterial(clickedItem)) return;
+        if (XMaterial.AIR.isSimilar(clickedItem)) return;
         for (InventoryData inventoryData : configData.inventoryDataMap.values()) {
             Inventory checkedInventory = inventoryData.getInventory();
             if (clickedInventory.equals(checkedInventory)) {
@@ -51,7 +52,7 @@ public abstract class EventManager implements Listener {
      */
     protected Inventory checkInventoryClickEvent(InventoryClickEvent event) {
         Inventory clickedInventory;
-        if (CCMaterial.isNewVersion()) {
+        if (XMaterial.isNewVersion()) {
             clickedInventory = event.getClickedInventory();
         } else {
             clickedInventory = event.getInventory();

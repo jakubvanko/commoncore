@@ -1,5 +1,6 @@
 package sk.jakubvanko.commoncore;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -76,13 +77,13 @@ public class ConfigManager {
             itemData.add("    name: '" + itemMeta.getDisplayName() + "'");
         }
         String materialName = itemStack.getType().name();
-        if (!CCMaterial.isNewVersion()) {
+        if (!XMaterial.isNewVersion()) {
             materialName += ":" + itemStack.getData().getData();
         }
         itemData.add("    material: " + materialName);
         itemData.add("    amount: " + itemStack.getAmount());
         // This assures compatibility with older versions
-        if (CCMaterial.isNewVersion()) {
+        if (XMaterial.isNewVersion()) {
             Damageable damageable = (Damageable) itemMeta;
             itemData.add("    damage: " + damageable.getDamage());
             if (itemMeta.isUnbreakable()) {
@@ -191,7 +192,8 @@ public class ConfigManager {
 
             String name = dataSection.getString("name", null);
             String materialName = dataSection.getString("material", "AIR");
-            CCMaterial ccMaterial = CCMaterial.fromString(materialName);
+            Optional<XMaterial> optionalXMaterial = XMaterial.matchXMaterial(materialName);
+            XMaterial xMaterial = optionalXMaterial.get();
             int amount = dataSection.getInt("amount", 1);
             int damage = dataSection.getInt("damage", 0);
             boolean unbreakable = dataSection.getBoolean("unbreakable", false);
@@ -214,7 +216,7 @@ public class ConfigManager {
                 }
             }
 
-            ItemBuilder itemBuilder = new ItemBuilder(ccMaterial)
+            ItemBuilder itemBuilder = new ItemBuilder(xMaterial)
                     .setAmount(amount)
                     .setDamage(damage)
                     .setUnbreakable(unbreakable)
@@ -225,7 +227,7 @@ public class ConfigManager {
                 itemBuilder.setName(name);
             }
             // Adding attribute modifiers
-            if (CCMaterial.isNewVersion()) {
+            if (XMaterial.isNewVersion()) {
                 ConfigurationSection attributesSection = dataSection.getConfigurationSection("item_attributes");
                 Map<Attribute, List<AttributeModifier>> attributeModifiers = new HashMap<>();
                 if (attributesSection != null) {
@@ -267,13 +269,14 @@ public class ConfigManager {
         Map<String, Recipe> recipeMap = new HashMap<>();
         ConfigurationSection recipeSection = config.getConfigurationSection("recipes");
         if (recipeSection == null) return recipeMap;
-        Map<Character, CCMaterial> ingredientsMap = new HashMap<>();
+        Map<Character, XMaterial> ingredientsMap = new HashMap<>();
         // Loading ingredients
         ConfigurationSection ingredientSection = recipeSection.getConfigurationSection("ingredients");
         if (ingredientSection == null) return recipeMap;
         for (String ingredientSymbol : ingredientSection.getKeys(false)) {
             Character ingredientCharacter = ingredientSymbol.charAt(0);
-            CCMaterial ingredient = CCMaterial.fromString(ingredientSection.getString(ingredientSymbol));
+            Optional<XMaterial> optionalIngredient = XMaterial.matchXMaterial(ingredientSection.getString(ingredientSymbol));
+            XMaterial ingredient = optionalIngredient.get();
             ingredientsMap.put(ingredientCharacter, ingredient);
         }
         // Creating shaped recipes
