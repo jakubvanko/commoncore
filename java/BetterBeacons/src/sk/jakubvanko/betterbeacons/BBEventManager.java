@@ -1,5 +1,6 @@
 package sk.jakubvanko.betterbeacons;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Beacon;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +26,7 @@ public class BBEventManager extends EventManager {
     private boolean needsTool;
     private boolean normalInteraction;
 
-    public BBEventManager(ConfigData configData, EffectTimeManager effectTimeManager, VaultManager vaultManager) {
+    BBEventManager(ConfigData configData, EffectTimeManager effectTimeManager, VaultManager vaultManager) {
         super(configData);
         messageManager = new MessageManager(configData.getMessageMap());
         this.effectTimeManager = effectTimeManager;
@@ -47,7 +48,7 @@ public class BBEventManager extends EventManager {
         if (event.isCancelled()) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (event.getClickedBlock() == null) return;
-        if (event.getClickedBlock().getType() != CCMaterial.BEACON.parseMaterial()) return;
+        if (event.getClickedBlock().getType() != XMaterial.BEACON.parseMaterial()) return;
         Player player = event.getPlayer();
         if (!(player.hasPermission("betterbeacons.usebeacon"))) {
             messageManager.sendMessage("no_permission", player, null);
@@ -64,14 +65,14 @@ public class BBEventManager extends EventManager {
             if (normalInteraction) return;
             // If the player is trying to use another item on the beacon while sneaking, maybe there is another plugin
             // that interacts with beacons so don't cancel the event
-            if (!(player.isSneaking()) || (CCMaterial.AIR.parseMaterial() == itemInHand.getType())) {
+            if (!(player.isSneaking()) || (XMaterial.AIR.isSimilar(itemInHand))) {
                 event.setCancelled(true);
             }
             return;
         }
         // If there is no tool and player is using an item on the beacon while sneaking, maybe there is another plugin
         // that interacts with beacons so don't cancel the event
-        else if (!needsTool && player.isSneaking() && !CCMaterial.AIR.isSameMaterial(itemInHand)) return;
+        else if (!needsTool && player.isSneaking() && !XMaterial.AIR.isSimilar(itemInHand)) return;
         Beacon beacon = (Beacon) event.getClickedBlock().getState();
         beaconMap.put(player, beacon);
         player.openInventory(configData.getInventoryDataMap().get("main_menu").getInventory());
@@ -92,7 +93,7 @@ public class BBEventManager extends EventManager {
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.isCancelled()) return;
         if (event.getBlock() == null) return;
-        if (event.getBlock().getType() != CCMaterial.BEACON.parseMaterial()) return;
+        if (event.getBlock().getType() != XMaterial.BEACON.parseMaterial()) return;
         Beacon beacon = (Beacon) event.getBlock().getState();
         effectTimeManager.removeBeaconEffect(beacon, true, true);
     }
