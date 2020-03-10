@@ -1,10 +1,11 @@
 package sk.jakubvanko.commoncore.actions;
 
-import sk.jakubvanko.commoncore.CCSound;
+import com.cryptomorin.xseries.XSound;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.commoncore.EventArguments;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Represents a play sound click action
@@ -29,6 +30,7 @@ public class PlaySound extends ClickAction<EventArguments> {
         String soundName = getArgumentString("NAME", "BLOCK_NOTE_BLOCK_HARP");
         int volume = getArgumentInt("VOLUME", 1);
         int pitch = getArgumentInt("PITCH", 1);
-        CCSound.fromString(soundName).playSound(eventArguments.getPlayer(), volume, pitch);
+        Optional<XSound> optionalXSound = XSound.matchXSound(soundName);
+        optionalXSound.get().playSound(eventArguments.getPlayer(), volume, pitch);
     }
 }
