@@ -1,12 +1,12 @@
 package sk.jakubvanko.ultrachest;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import sk.jakubvanko.commoncore.CCMaterial;
 import sk.jakubvanko.commoncore.ConfigManager;
 import sk.jakubvanko.commoncore.MessageManager;
 
@@ -20,7 +20,7 @@ public class UCCommand implements CommandExecutor {
     private MessageManager messageManager;
     private RewardGenerator rewardGenerator;
 
-    public UCCommand(ConfigManager configManager, UCConfigData configData) {
+    UCCommand(ConfigManager configManager, UCConfigData configData) {
         this.configManager = configManager;
         this.configData = configData;
         this.messageManager = new MessageManager(configData.getMessageMap());
@@ -151,14 +151,14 @@ public class UCCommand implements CommandExecutor {
                     }
                     Player player = (Player) sender;
                     ItemStack playerItemStack;
-                    if (CCMaterial.isNewVersion()){
+                    if (XMaterial.isNewVersion()){
                         playerItemStack = player.getInventory().getItemInMainHand();
                     }
                     else {
                         playerItemStack = player.getItemInHand();
                     }
                     if (playerItemStack == null) return true;
-                    if (playerItemStack.getType() == CCMaterial.AIR.parseMaterial()) return true;
+                    if (XMaterial.AIR.isSimilar(playerItemStack)) return true;
                     ItemStack itemToRegister = new ItemStack(playerItemStack);
                     itemToRegister.setAmount(1);
                     String itemIdentifier = configManager.registerItem(itemToRegister);
@@ -184,8 +184,7 @@ public class UCCommand implements CommandExecutor {
 
     private Integer tryParse(String value) {
         try {
-            int i = Integer.parseInt(value);
-            return i;
+            return Integer.parseInt(value);
         } catch (NumberFormatException e) {
             return null;
         }

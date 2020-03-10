@@ -1,7 +1,7 @@
 package sk.jakubvanko.ultrachest;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.inventory.ItemStack;
-import sk.jakubvanko.commoncore.CCMaterial;
 
 import java.util.List;
 import java.util.Map;
@@ -10,12 +10,12 @@ public class RewardGenerator {
 
     private UCConfigData configData;
 
-    public RewardGenerator(UCConfigData configData) {
+    RewardGenerator(UCConfigData configData) {
         this.configData = configData;
     }
 
-    public ItemStack generateItemFromMap(Map<ItemStack, Integer> itemChanceMap) {
-        if (itemChanceMap == null) return new ItemStack(CCMaterial.AIR.parseMaterial());
+    ItemStack generateItemFromMap(Map<ItemStack, Integer> itemChanceMap) {
+        if (itemChanceMap == null) return XMaterial.AIR.parseItem();
         int totalChance = 0;
         for (Integer chance : itemChanceMap.values()) {
             totalChance += chance;
@@ -25,21 +25,21 @@ public class RewardGenerator {
             randomNumber -= entry.getValue();
             if (randomNumber <= 0) {
                 ItemStack rewardItem = entry.getKey();
-                if (rewardItem == null) return new ItemStack(CCMaterial.AIR.parseMaterial());
+                if (rewardItem == null) return XMaterial.AIR.parseItem();
                 return new ItemStack(rewardItem);
             }
         }
-        return new ItemStack(CCMaterial.AIR.parseMaterial());
+        return XMaterial.AIR.parseItem();
     }
 
-    public ItemStack generateRewardTier(ItemStack ultraChestItem) {
+    ItemStack generateRewardTier(ItemStack ultraChestItem) {
         Map<ItemStack, Integer> chestTierMap = configData.getChestSettingsMap().get(ultraChestItem);
         return generateItemFromMap(chestTierMap);
     }
 
     public ItemStack generateReward(ItemStack rewardTierItem) {
         List<RewardData> rewardDataList = configData.getRewardSettingsMap().get(rewardTierItem);
-        if (rewardDataList == null) return new ItemStack(CCMaterial.AIR.parseMaterial());
+        if (rewardDataList == null) return XMaterial.AIR.parseItem();
         int totalChance = 0;
         for (RewardData rewardData : rewardDataList) {
             totalChance += rewardData.getChance();
@@ -54,6 +54,6 @@ public class RewardGenerator {
                 return reward;
             }
         }
-        return new ItemStack(CCMaterial.AIR.parseMaterial());
+        return XMaterial.AIR.parseItem();
     }
 }

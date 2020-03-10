@@ -1,9 +1,9 @@
 package sk.jakubvanko.ultrachest;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import sk.jakubvanko.commoncore.CCMaterial;
-import sk.jakubvanko.commoncore.CCSound;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.ultrachest.actions.GenerateReward;
 
@@ -14,10 +14,10 @@ public class RewardRevealer extends BukkitRunnable {
 
     private int currentSlot = 0;
     private PlayerData playerData;
-    private CCSound sound;
+    private XSound sound;
     private RewardGenerator rewardGenerator;
 
-    public RewardRevealer(RewardGenerator rewardGenerator, PlayerData playerData, CCSound sound) {
+    public RewardRevealer(RewardGenerator rewardGenerator, PlayerData playerData, XSound sound) {
         this.playerData = playerData;
         this.sound = sound;
         this.rewardGenerator = rewardGenerator;
@@ -47,13 +47,13 @@ public class RewardRevealer extends BukkitRunnable {
             // Removes reward tiers that were not chosen by the player
             for (int i = 0; i < playerData.getPlayerInventoryData().getInventory().getSize(); i++){
                 if (!playerData.getClickedSlots().contains(i)) {
-                    playerData.getPlayerInventoryData().getInventory().setItem(i, new ItemStack(CCMaterial.AIR.parseMaterial()));
+                    playerData.getPlayerInventoryData().getInventory().setItem(i, XMaterial.AIR.parseItem());
                 }
             }
         }
     }
 
-    public void finishRunning() {
+    void finishRunning() {
         while (currentSlot < playerData.getPlayerInventoryData().getInventory().getSize()) {
             run();
         }

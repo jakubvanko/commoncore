@@ -1,5 +1,6 @@
 package sk.jakubvanko.ultrachest;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -30,7 +31,7 @@ public class UCEventManager extends EventManager {
     private Plugin plugin;
     private RewardGenerator rewardGenerator;
 
-    public UCEventManager(Plugin plugin, UCConfigData configData) {
+    UCEventManager(Plugin plugin, UCConfigData configData) {
         super(configData);
         this.configData = configData;
         messageManager = new MessageManager(configData.getMessageMap());
@@ -87,7 +88,7 @@ public class UCEventManager extends EventManager {
         Inventory newInventory = Bukkit.createInventory(null, defaultInventory.getSize(), defaultInventoryData.getInventoryTitle());
         for (int i = 0; i < defaultInventory.getSize(); i++) {
             if (defaultInventory.getItem(i) == null) continue;
-            if (defaultInventory.getItem(i).getType() == CCMaterial.AIR.parseMaterial()) continue;
+            if (XMaterial.AIR.isSimilar(defaultInventory.getItem(i))) continue;
             newInventory.setItem(i, new ItemStack(defaultInventory.getItem(i)));
         }
         Map<Integer, List<ClickAction>> slotActionMap = defaultInventoryData.getSlotActionMap();
@@ -102,7 +103,7 @@ public class UCEventManager extends EventManager {
         if (clickedInventory == null) return;
         ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem == null) return;
-        if (CCMaterial.AIR.isSameMaterial(clickedItem)) return;
+        if (XMaterial.AIR.isSimilar(clickedItem)) return;
         Player player = (Player) event.getWhoClicked();
         if (player == null) return;
         PlayerData playerData = playerDataMap.get(player);
@@ -150,7 +151,7 @@ public class UCEventManager extends EventManager {
                 }
                 ItemStack currentItem = inventory.getItem(i);
                 if (currentItem == null) continue;
-                if (currentItem.getType() == CCMaterial.AIR.parseMaterial()) continue;
+                if (XMaterial.AIR.isSimilar(currentItem)) continue;
                 player.getInventory().addItem(currentItem);
             }
         }

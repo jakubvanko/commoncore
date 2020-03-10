@@ -1,9 +1,9 @@
 package sk.jakubvanko.ultrachest.actions;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import sk.jakubvanko.commoncore.CCMaterial;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.commoncore.actions.GiveItem;
 import sk.jakubvanko.commoncore.actions.RemoveItem;
@@ -27,7 +27,7 @@ public class GenerateReward extends ClickAction<UCEventArguments> {
         ItemStack generatedReward = eventArguments.getRewardGenerator().generateReward(rewardTier);
         int clickedSlot = event.getSlot();
         Inventory clickedInventory;
-        if (CCMaterial.isNewVersion()) {
+        if (XMaterial.isNewVersion()) {
             clickedInventory = event.getClickedInventory();
         } else {
             clickedInventory = event.getView().getTopInventory();

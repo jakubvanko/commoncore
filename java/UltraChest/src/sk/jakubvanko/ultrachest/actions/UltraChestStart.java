@@ -1,10 +1,10 @@
 package sk.jakubvanko.ultrachest.actions;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
-import sk.jakubvanko.commoncore.CCMaterial;
-import sk.jakubvanko.commoncore.CCSound;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.ultrachest.PlayerData;
 import sk.jakubvanko.ultrachest.RewardRevealer;
@@ -12,6 +12,7 @@ import sk.jakubvanko.ultrachest.UCEventArguments;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UltraChestStart extends ClickAction<UCEventArguments> {
 
@@ -33,7 +34,7 @@ public class UltraChestStart extends ClickAction<UCEventArguments> {
             eventArguments.getPlayerData().getPlayerInventoryData().getSlotActionMap().remove(clickedSlot);
             if (playerChoicesLeft - 1 == 0) {
                 Inventory clickedInventory;
-                if (CCMaterial.isNewVersion()) {
+                if (XMaterial.isNewVersion()) {
                     clickedInventory = event.getClickedInventory();
                 } else {
                     clickedInventory = event.getView().getTopInventory();
@@ -43,10 +44,11 @@ public class UltraChestStart extends ClickAction<UCEventArguments> {
                     eventArguments.getPlayerData().getPlayerInventoryData().getSlotActionMap().remove(i);
                 }
                 String soundName = getArgumentString("REVEALING_SOUND", null);
-                CCSound sound;
+                XSound sound;
                 if (soundName == null) sound = null;
                 else {
-                    sound = CCSound.fromString(soundName);
+                    Optional<XSound> optionalXSound = XSound.matchXSound(soundName);
+                    sound = optionalXSound.get();
                 }
                 RewardRevealer rewardRevealer = new RewardRevealer(eventArguments.getRewardGenerator(), playerData, sound);
                 playerData.setRewardRevealer(rewardRevealer);
