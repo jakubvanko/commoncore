@@ -22,29 +22,29 @@ CommonCore also comes bundled with [XSeries](https://github.com/CryptoMorin/XSer
 ## Features
 
 - Material Convertor
- - Ensures cross-version material compatibility (1.8 - 1.15)
- - Administered by [XSeries](https://github.com/CryptoMorin/XSeries)
+  - Ensures cross-version material compatibility (1.8 - 1.15)
+  - Administered by [XSeries](https://github.com/CryptoMorin/XSeries)
 - Sound Convertor
   - Ensures cross-version sound compatibility (1.8 - 1.15)
   - Administered by [XSeries](https://github.com/CryptoMorin/XSeries)
 - Item Builder
- - Implements Builder design pattern to simplify the creation of ItemStacks
+  - Implements Builder design pattern to simplify the creation of ItemStacks
 - Config Loader
- - Loads ItemStacks, Recipes and Inventories directly from the configuration
+  - Loads ItemStacks, Recipes and Inventories directly from the configuration
 - Message Manager
- - Creates adaptable strings (abbreviations) and simplifies the process of messaging players
+  - Creates adaptable strings (abbreviations) and simplifies the process of messaging players
 - Vault Manager
- - Integrates and simplifies the loading and interaction of the Vault plugin API
+  - Integrates and simplifies the loading and interaction of the Vault plugin API
 - Inventory GUI Simplification
- - Implements an action-like inventory GUI structure
+  - Implements an action-like inventory GUI structure
 - Complete Documentation
- - Includes a complete documentation for programmers and also users of CommonCore plugins
+  - Includes a complete documentation for programmers and also users of CommonCore plugins
 - [XSeries](https://github.com/CryptoMorin/XSeries)
- - Includes [XSeries](https://github.com/CryptoMorin/XSeries) to provide additional utilities for your plugin
+  - Includes [XSeries](https://github.com/CryptoMorin/XSeries) to provide additional utilities for your plugin
 - BStats
- - Includes BStats to provide metrics for your plugin
+  - Includes BStats to provide metrics for your plugin
 - Custom Items and Textures Support
- - Implements experimental support for the 3rd party Custom Items and Textures plugin.
+  - Implements experimental support for the 3rd party Custom Items and Textures plugin.
 
 
 ## Installation
