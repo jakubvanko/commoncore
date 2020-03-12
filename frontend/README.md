@@ -1,33 +1,62 @@
-# Website
+# **CommonCore Website**
 
-This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
+This folder contains code for the website of CommonCore plugins. You can visit it at [commoncore.jakubvanko.com](https://commoncore.jakubvanko.com/).
 
-### Installation
+#### Table of Contents
 
-```
-$ yarn
-```
+- [Introduction](#introduction)
+- [Design](#design)
+- [Features](#features)
+- [Used Technologies](#used-technologies)
+- [Deployment](#deployment)
+- [Conclusion](#conclusion)
 
-### Local Development
+## Introduction
 
-```
-$ yarn start
-```
+Documentation is a vital part of software development. A good quality website and documentation helps possible users decide whether they should invest their time and resources into further development of the project. This website serves the mentioned purpose for CommonCore plugins.
 
-This command starts a local development server and open up a browser window. Most changes are reflected live without having to restart the server.
+The website structure was created using Docusaurus 2. However, the landing page was rewritten from scratch to account for a custom design.
 
-### Build
+##### Goal of this project
+The goal of this project was to create a professional lightweight front-end web application that would serve as a landing page for CommonCore plugins and its documentation. It had to showcase the features of CommonCore while offering a simple navigation regarding its documentation.
 
-```
-$ yarn build
-```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## Design
 
-### Deployment
+The design is simple and straightforward. It is quite minimalistic and offers a quick loading time and a few pleasant animations.
 
-```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+## Features
+
+##### Front-End
+- Responsive design
+- SVG shape background image
+- Custom components
+- Documentation section
+
+
+## Used Technologies:
+
+##### Front-End
+- Docusaurus 2
+- React.js v16.8
+  - React Hooks
+  - React Lazy and Suspense (not supported in Docusaurus 2 yet)
+- styled-components
+- react-visibility-sensor
+
+##### Other technologies
+- Adobe XD
+- Adobe Illustrator
+
+
+## Deployment
+
+The project was deployed on a DigitalOcean droplet where it is being managed by Nginx.
+
+The deployment of frontend can be done simply using a node.js script ("npm run deploy").
+
+
+## Conclusion
+
+The project was completed successfully. All needed features were implemented while ensuring the simplicity of possible further development.
