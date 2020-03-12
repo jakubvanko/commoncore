@@ -52,7 +52,7 @@ CommonCore also comes bundled with [XSeries](https://github.com/CryptoMorin/XSer
 To use CommonCore library in a plugin, the library's .jar file needs to be downloaded and set as a dependency for the given project. It is also vitally important to include the compressed CommonCore code in the final plugin's .jar file.
 
 
-## Installation
+## Documentation
 
 Documentation and tutorials for programmers and server administrators are to be found on the [website of the CommonCore library](https://commoncore.jakubvanko.com).
 
