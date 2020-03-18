@@ -114,7 +114,8 @@ const CommonCore = () => {
                 </SubHeading>
                 <ButtonContainer>
                     <LinkContainer>
-                        <Button>
+                        <Button href={"https://github.com/jakubvanko/commoncore"} target={"_blank"}
+                                rel={"noopener noreferrer"}>
                             <GitHub width={30}/>
                             GitHub
                         </Button>
