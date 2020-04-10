@@ -19,7 +19,7 @@ public class BetterBeacons extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        BBConfigManager configManager = new BBConfigManager(getDataFolder().getPath() + "/config.yml", new BBClickActionFactory());
+        BBConfigManager configManager = new BBConfigManager(getDataFolder().getPath() + "/config.yml", new BBClickActionFactory(), this);
         ConfigData configData = configManager.loadData();
         // Registering recipes
         for (Map.Entry<String, Recipe> recipeEntry : configData.getRecipeMap().entrySet()) {

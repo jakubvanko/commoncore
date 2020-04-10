@@ -55,6 +55,7 @@ public class EffectTimeManager extends BukkitRunnable {
             effectTimeData.set(uniqueID + ".x", beacon.getLocation().getBlockX());
             effectTimeData.set(uniqueID + ".y", beacon.getLocation().getBlockY());
             effectTimeData.set(uniqueID + ".z", beacon.getLocation().getBlockZ());
+            effectTimeData.set(uniqueID + ".world", beacon.getLocation().getWorld().getName());
             effectTimeData.set(uniqueID + ".mode", mode);
             effectTimeData.set(uniqueID + ".effect", effectType.getName());
             effectTimeData.set(uniqueID + ".duration", effectDuration);
@@ -71,10 +72,17 @@ public class EffectTimeManager extends BukkitRunnable {
     }
 
     public String getBeaconID(Beacon beacon, String mode) {
+        // If world name is "world", it needs to be an empty string for backwards compatibility
+        String worldName = beacon.getLocation().getWorld().getName();
+        if (worldName.equals("world")) {
+            worldName = "";
+        }
+
         return "" +
                 beacon.getLocation().getBlockX() +
                 beacon.getLocation().getBlockY() +
                 beacon.getLocation().getBlockZ() +
+                worldName +
                 mode;
     }
 
@@ -121,7 +129,8 @@ public class EffectTimeManager extends BukkitRunnable {
         int beaconX = effectTimeData.getInt(uniqueID + ".x");
         int beaconY = effectTimeData.getInt(uniqueID + ".y");
         int beaconZ = effectTimeData.getInt(uniqueID + ".z");
-        Location beaconLocation = new Location(Bukkit.getWorld("world"), beaconX, beaconY, beaconZ);
+        String beaconWorldName = effectTimeData.getString(uniqueID + ".world", "world");
+        Location beaconLocation = new Location(Bukkit.getWorld(beaconWorldName), beaconX, beaconY, beaconZ);
         BlockState blockState = beaconLocation.getBlock().getState();
         if (blockState instanceof Beacon) {
             return (Beacon) blockState;

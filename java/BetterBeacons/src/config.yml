@@ -18,7 +18,7 @@
 general:
   tool:
     needed: true
-  # "normal_beacon_interaction" decides whether or not players can use the beacon the normal way
+  # "normal_beacon_interaction" decides whether players can use the beacon the normal way
   # Be careful with this, because if this is "true" and "tool_needed" is "false" the plugin will probably not work and will be buggy
   normal_beacon_interaction: false
   effect_duration:
@@ -28,9 +28,9 @@ general:
 
 messages:
   logo: '§3[§aBetter§6Beacons§3]§f' # its abbreviation is "%logo"
-  secondary_set_low_tier: "%logo §cSecondary Effect was set but it will activate once the beacon tier is 4."
-  secondary_set_no_primary: "%logo §cSecondary Effect was set but it will activate once the primary effect is set."
-  low_tier: "%logo §cYour beacon tier is too low! Needed tier is %nt, and your tier is only %bt."
+  secondary_set_low_tier: "%logo §cSecondary Effect was set, but it will activate once the beacon tier is 4."
+  secondary_set_no_primary: "%logo §cSecondary Effect was set, but it will activate once the primary effect is set."
+  low_tier: "%logo §cYour beacon tier is too low! The needed tier is %nt, and your tier is only %bt."
   no_permission: "%logo §cSorry, you don't have permission to do that."
   player_not_found: "%logo §cPlayer not found."
   not_enough_items: "%logo §cSorry, you don't have all the needed items."
@@ -38,7 +38,7 @@ messages:
   wrong_args: "%logo §cWrong command arguments! Type /betterbeacons for help."
   default_command: |
     §3------------------%logo------------------
-    §e/betterbeacons tool§e - Gives you the tool needed to setup beacons
+    §e/betterbeacons tool§e - Gives you the tool needed to set up beacons
   beacon_info: |
     %logo
     §3Beacon is located at  §aX: %x,  §bY: %y,  §eZ: %z

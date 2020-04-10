@@ -3,6 +3,7 @@ package sk.jakubvanko.betterbeacons;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import sk.jakubvanko.betterbeacons.actions.SetBeaconEffect;
 import sk.jakubvanko.commoncore.ClickAction;
 import sk.jakubvanko.commoncore.ConfigManager;
@@ -18,8 +19,8 @@ import java.util.Map;
 
 public class BBConfigManager extends ConfigManager {
 
-    public BBConfigManager(String configPath, IClickActionFactory clickActionFactory) {
-        super(configPath, clickActionFactory);
+    public BBConfigManager(String configPath, IClickActionFactory clickActionFactory, Plugin plugin) {
+        super(configPath, clickActionFactory, plugin);
     }
 
     @Override
