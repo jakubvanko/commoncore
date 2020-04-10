@@ -3,6 +3,7 @@ package sk.jakubvanko.commoncore;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.Configuration;
@@ -28,6 +29,7 @@ public class ConfigManager {
     protected File configFile;
     protected Configuration config;
     protected IClickActionFactory clickActionFactory;
+    protected Plugin plugin;
 
     /**
      * Creates a config manager
@@ -35,6 +37,7 @@ public class ConfigManager {
      * @param configPath         Path to the configuration to link
      * @param clickActionFactory Factory for creating click actions from their names
      */
+    @Deprecated
     public ConfigManager(String configPath, IClickActionFactory clickActionFactory) {
         configFile = new File(configPath);
         if (!configFile.exists()) {
@@ -47,6 +50,17 @@ public class ConfigManager {
         }
         this.config = YamlConfiguration.loadConfiguration(configFile);
         this.clickActionFactory = clickActionFactory;
+    }
+
+    /**
+     * Creates a config manager
+     *
+     * @param configPath         Path to the configuration to link
+     * @param clickActionFactory Factory for creating click actions from their names
+     */
+    public ConfigManager(String configPath, IClickActionFactory clickActionFactory, Plugin plugin) {
+        this(configPath, clickActionFactory);
+        this.plugin = plugin;
     }
 
     /**
@@ -285,7 +299,13 @@ public class ConfigManager {
             for (String itemIdentifier : shapedRecipeSection.getKeys(false)) {
                 ConfigurationSection recipeRowSection = shapedRecipeSection.getConfigurationSection(itemIdentifier);
                 ItemStack result = itemStackMap.get(itemIdentifier);
-                ShapedRecipe shapedRecipe = new ShapedRecipe(result);
+                ShapedRecipe shapedRecipe;
+                try {
+                    NamespacedKey namespacedKey = new NamespacedKey(this.plugin, itemIdentifier);
+                    shapedRecipe = new ShapedRecipe(namespacedKey, result);
+                } catch (Exception e) {
+                    shapedRecipe = new ShapedRecipe(result);
+                }
                 String recipeRow1 = recipeRowSection.getString("row_1", "   ");
                 String recipeRow2 = recipeRowSection.getString("row_2", "   ");
                 String recipeRow3 = recipeRowSection.getString("row_3", "   ");
@@ -311,7 +331,13 @@ public class ConfigManager {
             for (String itemIdentifier : shapelessRecipeSection.getKeys(false)) {
                 ItemStack result = itemStackMap.get(itemIdentifier);
                 String ingredientString = shapelessRecipeSection.getString(itemIdentifier);
-                ShapelessRecipe shapelessRecipe = new ShapelessRecipe(result);
+                ShapelessRecipe shapelessRecipe;
+                try {
+                    NamespacedKey namespacedKey = new NamespacedKey(this.plugin, itemIdentifier);
+                    shapelessRecipe = new ShapelessRecipe(namespacedKey, result);
+                } catch (Exception e) {
+                    shapelessRecipe = new ShapelessRecipe(result);
+                }
                 for (Character ingredientCharacter : ingredientString.toCharArray()) {
                     shapelessRecipe.addIngredient(ingredientsMap.get(ingredientCharacter).parseMaterial());
                 }
