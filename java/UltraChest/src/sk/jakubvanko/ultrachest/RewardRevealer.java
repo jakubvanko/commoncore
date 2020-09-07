@@ -39,7 +39,7 @@ public class RewardRevealer extends BukkitRunnable {
                 playerData.getPlayerInventoryData().getSlotActionMap().put(currentSlot, newActions);
             }
             if (sound != null) {
-                sound.playSound(playerData.getPlayer(), 10, 1);
+                sound.play(playerData.getPlayer(), 10, 1);
             }
             currentSlot++;
         } else {

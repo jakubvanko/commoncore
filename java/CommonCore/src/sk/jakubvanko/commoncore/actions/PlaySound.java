@@ -31,6 +31,6 @@ public class PlaySound extends ClickAction<EventArguments> {
         int volume = getArgumentInt("VOLUME", 1);
         int pitch = getArgumentInt("PITCH", 1);
         Optional<XSound> optionalXSound = XSound.matchXSound(soundName);
-        optionalXSound.get().playSound(eventArguments.getPlayer(), volume, pitch);
+        optionalXSound.get().play(eventArguments.getPlayer(), volume, pitch);
     }
 }
