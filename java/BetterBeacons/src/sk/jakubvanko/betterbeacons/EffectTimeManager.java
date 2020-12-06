@@ -103,6 +103,10 @@ public class EffectTimeManager extends BukkitRunnable {
 
     private void removeBeaconEffect(FileConfiguration effectTimeData, String uniqueID) {
         Beacon beacon = getBeacon(effectTimeData, uniqueID);
+        removeBeaconEffect(effectTimeData, uniqueID, beacon);
+    }
+
+    private void removeBeaconEffect(FileConfiguration effectTimeData, String uniqueID, Beacon beacon) {
         if (beacon == null) return;
         String mode = effectTimeData.getString(uniqueID + ".mode");
         if (mode.equals("PRIMARY")) {
@@ -117,10 +121,10 @@ public class EffectTimeManager extends BukkitRunnable {
     public void removeBeaconEffect(Beacon beacon, boolean primary, boolean secondary) {
         FileConfiguration effectTimeData = YamlConfiguration.loadConfiguration(effectTimeFile);
         if (primary) {
-            removeBeaconEffect(effectTimeData, getBeaconID(beacon, "PRIMARY"));
+            removeBeaconEffect(effectTimeData, getBeaconID(beacon, "PRIMARY"), beacon);
         }
         if (secondary) {
-            removeBeaconEffect(effectTimeData, getBeaconID(beacon, "SECONDARY"));
+            removeBeaconEffect(effectTimeData, getBeaconID(beacon, "SECONDARY"), beacon);
         }
         saveData(effectTimeData);
     }
