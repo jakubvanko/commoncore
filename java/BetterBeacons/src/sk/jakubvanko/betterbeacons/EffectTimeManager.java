@@ -109,12 +109,14 @@ public class EffectTimeManager extends BukkitRunnable {
     private void removeBeaconEffect(FileConfiguration effectTimeData, String uniqueID, Beacon beacon) {
         if (beacon == null) return;
         String mode = effectTimeData.getString(uniqueID + ".mode");
-        if (mode.equals("PRIMARY")) {
-            beacon.setPrimaryEffect(null);
-        } else {
-            beacon.setSecondaryEffect(null);
+        if (mode != null) {
+            if (mode.equals("PRIMARY")) {
+                beacon.setPrimaryEffect(null);
+            } else {
+                beacon.setSecondaryEffect(null);
+            }
+            beacon.update();
         }
-        beacon.update();
         effectTimeData.set(uniqueID, null);
     }
 
