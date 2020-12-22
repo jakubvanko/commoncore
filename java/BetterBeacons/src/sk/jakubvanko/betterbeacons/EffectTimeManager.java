@@ -3,6 +3,7 @@ package sk.jakubvanko.betterbeacons;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Beacon;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -137,7 +138,9 @@ public class EffectTimeManager extends BukkitRunnable {
         int beaconZ = effectTimeData.getInt(uniqueID + ".z");
         String beaconWorldName = effectTimeData.getString(uniqueID + ".world", "world");
         Location beaconLocation = new Location(Bukkit.getWorld(beaconWorldName), beaconX, beaconY, beaconZ);
-        BlockState blockState = beaconLocation.getBlock().getState();
+        Block block = beaconLocation.getBlock();
+        if (block == null) return null;
+        BlockState blockState = block.getState();
         if (blockState instanceof Beacon) {
             return (Beacon) blockState;
         } else {
