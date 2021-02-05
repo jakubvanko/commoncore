@@ -141,7 +141,10 @@ public class ItemBuilder {
      * @return Itemstack with given parameters
      */
     public ItemStack build() {
-        ItemStack itemStack = xMaterial.parseItem(true);
+        ItemStack itemStack = xMaterial.parseItem();
+        if (itemStack == null) {
+            itemStack = XMaterial.COBBLESTONE.parseItem();
+        }
         itemStack.setAmount(amount);
         if (enchantments != null) {
             itemStack.addUnsafeEnchantments(enchantments);
