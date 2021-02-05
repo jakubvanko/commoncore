@@ -7,6 +7,7 @@ This repository contains the CommonCore library and plugins as well as the websi
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
+- [Development](#development)
 - [Documentation](#documentation)
 - [CommonCore Plugins](#plugins)
 
@@ -51,6 +52,16 @@ CommonCore also comes bundled with [XSeries](https://github.com/CryptoMorin/XSer
 
 To use CommonCore library in a plugin, the library's .jar file needs to be downloaded and set as a dependency for the given project. It is also vitally important to include the compressed CommonCore code in the final plugin's .jar file.
 
+
+## Development
+
+The development of CommonCore needs the following dependencies located in the folder named "__external":
+
+- XSeries - must be  **EXTRACTED** into the compiled artifact
+- Vault - **NOT to be included** in the compiled artifact
+- Spigot API at least 1.13.2 - **NOT to be included** in the compiled artifact
+
+Plugins developed using the CommonCore library must extract the CommonCore library into the compiled artifact of the plugin.
 
 ## Documentation
 
