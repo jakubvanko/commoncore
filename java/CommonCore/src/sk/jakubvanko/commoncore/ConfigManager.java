@@ -187,15 +187,36 @@ public class ConfigManager {
             String customItemName = dataSection.getString("CustomItemName");
             if (customItemName != null) {
                 try {
-                    Plugin customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
+                    ItemStack customItemStack = null;
 
-                    // Intentionally cause NullPointerException if it is not available
-                    Object customItemSet = customItemsPlugin.getClass().getMethod("getSet").invoke(customItemsPlugin);
-                    Object customItem = customItemSet.getClass().getMethod("getItem", String.class).invoke(customItemSet, customItemName);
-                    if (customItem == null) {
+                    // CustomItems 9.14 and later has a nice API
+                    try {
+                        int amount = dataSection.getInt("amount", 1);
+                        customItemStack = (ItemStack) Class.forName(
+                                "nl.knokko.customitems.plugin.CustomItemsApi"
+                        ).getMethod(
+                                "createItemStack", String.class, int.class
+                        ).invoke(null, customItemName, amount);
+                    } catch (ClassNotFoundException tooOldForApi) {
+                        // If we reach this line, we should continue with attempting the 'old ugly' way of creating an item stack
+                    }
+
+                    // This is the 'old ugly' way of creating an item stack...
+                    if (customItemStack == null) {
+                        Plugin customItemsPlugin = Bukkit.getPluginManager().getPlugin("CustomItems");
+
+                        // Intentionally cause NullPointerException if it is not available
+                        Object customItemSet = customItemsPlugin.getClass().getMethod("getSet").invoke(customItemsPlugin);
+                        Object customItem = customItemSet.getClass().getMethod("getItem", String.class).invoke(customItemSet, customItemName);
+                        if (customItem != null) {
+                            customItemStack = (ItemStack) customItem.getClass().getMethod("create", int.class).invoke(customItem, 1);
+                        }
+                    }
+
+                    if (customItemStack == null) {
                         Bukkit.getLogger().warning("A custom item with name '" + customItemName + "' was requested, but it doesn't exist");
                     } else {
-                        itemMap.put(itemIdentifier, (ItemStack) customItem.getClass().getMethod("create", int.class).invoke(customItem, 1));
+                        itemMap.put(itemIdentifier, customItemStack);
                         continue;
                     }
                 } catch (Exception ex) {
