@@ -5,12 +5,12 @@
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus build && ssh root@104.248.18.245 rm -r /var/www/commoncore.jakubvanko.com/html/* &&scp -r ./build/* root@104.248.18.245:/var/www/commoncore.jakubvanko.com/html"
+    "swizzle": "docusaurus swizzle"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.43",
     "@docusaurus/preset-classic": "^2.0.0-alpha.43",
+    "@mdx-js/react": "^1.6.22",
     "classnames": "^2.2.6",
     "react": "^16.13.0",
     "react-countup": "^4.3.3",

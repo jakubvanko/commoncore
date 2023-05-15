@@ -7,14 +7,16 @@ module.exports = {
     organizationName: 'jakubvanko', // Usually your GitHub org/user name.
     projectName: 'commoncore', // Usually your repo name.
     themeConfig: {
-        disableDarkMode: true,
+        colorMode: {
+            disableSwitch: true,
+        },
         navbar: {
             title: 'CommonCore',
             logo: {
                 alt: 'CommonCore logo',
                 src: 'img/logo.svg',
             },
-            links: [
+            items: [
                 {to: 'docs/01_getting_started', label: 'Docs', position: 'right'},
                 {
                     href: 'https://github.com/jakubvanko/commoncore',
