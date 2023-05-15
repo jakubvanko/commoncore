@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "docusaurus start",
-    "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus build && ssh root@104.248.18.245 rm -r /var/www/commoncore.jakubvanko.com/html/* &&scp -r ./build/* root@104.248.18.245:/var/www/commoncore.jakubvanko.com/html"
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && docusaurus start",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && docusaurus build",
+    "swizzle": "docusaurus swizzle"
   },
   "dependencies": {
     "@docusaurus/core": "^2.0.0-alpha.43",

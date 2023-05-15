@@ -52,9 +52,7 @@ The design is simple and straightforward. It is quite minimalistic and offers a 
 
 ## Deployment
 
-The project was deployed on a DigitalOcean droplet where it is being managed by Nginx.
-
-The deployment of frontend can be done simply using a node.js script ("npm run deploy").
+The project was deployed using Vercel.
 
 
 ## Conclusion
